@@ -29,7 +29,7 @@ int newMP=_MP-MPCost;
 }
 
 
-void Character:: diminishHP(int damage){
+void Character:: diminishHP(int damage, Display &display){
 
 	int HPDamage=round(damage-0.5*(_Def+_Armor.getAttribute()));
 	if (HPDamage<0){
@@ -45,7 +45,7 @@ void Character:: diminishHP(int damage){
 }
 
 
-void Character:: attack(Character  &target) const{
+void Character:: attack(Character  &target, , Display &display) const{
 
 
 	int damage=_Atk + _Weapon.getAttribute();
@@ -67,7 +67,7 @@ void Character:: attack(Character  &target) const{
 
 }
 
-void Character::castOffensiveSpell(Spell &spell, Character &target){
+void Character::castOffensiveSpell(Spell &spell, Character &target, Display &display){
 
 	int power=_Mg+spell.getPower();
 
@@ -115,68 +115,6 @@ void Character:: castHealingSpell(Spell &spell, Character &target){
 
 void Character:: castBuffingSpell(Spell &spell, Character &target){}
 void Character:: castDebuffingSpell(Spell &spell, Character &target){}
-
-
-void Character:: checkIfDied(vector <Character *> &targetList, int choiceTarget) const {
-
-	if (targetList[choiceTarget-1]->isAlive()==false){
-		cout << targetList[choiceTarget-1]->getName() << " has died!\n";
-		targetList.erase(targetList.begin()+(choiceTarget-1));
-	}
-}
-
-
-int Character:: selectTargetPlayer(vector <Character *> &targetList){
-
-
-	int choiceTarget=0;
-
-	do {
-
-		cout<< "(type 0 to go back) Select your target: \n";
-
-		for (int i=0; i<targetList.size(); i++){
-				cout << " > " << i+1 << ": " << targetList[i]->getName() << endl;
-		}
-
-		cin>> choiceTarget;
-
-		if (choiceTarget<0 || choiceTarget>targetList.size()) {
-			cout << "!Wrong input!" << endl;
-		}
-
-	} while (choiceTarget<0 || choiceTarget>targetList.size());
-
-	return choiceTarget;
-
-}
-
-int Character:: selectTargetPlayer(bool ally_enemy){
-
-int choiceTarget=0;
-
-	do{
-
-		cout<< "(type 0 to go back) Confirm your target: \n1 > All";
-
-		if (ally_enemy){
-			cout << "Enemies\n";
-		}
-
-		else cout << "Allies\n";
-
-		cin>> choiceTarget;
-
-		if (choiceTarget!=0 || choiceTarget!=1) {
-			cout << "!Wrong input!" << endl;
-		}
-
-
-	} while (choiceTarget!=0 || choiceTarget!=1);
-
-
-	return choiceTarget;
-}
 
 
 void Character:: replendishHPAndMP(){
