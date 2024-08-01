@@ -1,10 +1,11 @@
 #include <iostream>
 #include "PlayerCharacter.hpp"
 #include "EnemyCharacter.hpp"
+#include "Display.hpp"
 
 using namespace std;
 
-void combat(vector <PlayerCharacter *> &playerList, vector <EnemyCharacter *> &enemyList, Inventory &inventory){
+void combat(vector <PlayerCharacter *> &playerList, vector <EnemyCharacter *> &enemyList, Inventory &inventory, Display &display){
 
 bool partyIsAlive=true;
 bool enemiesAreAlive=true;
@@ -16,31 +17,23 @@ bool enemiesAreAlive=true;
 		enemiesAreAlive=false;
 
 
-		for (int i=0; i<playerList.size() ;i++){
-			if (playerList[i]->isAlive()){
-
-				playerList[i]->showStatus();
-			}
-		}
-
-		cout<<endl;
-
-
-		for (int i=0; i<enemyList.size() ;i++){
-			if (enemyList[i]->isAlive()){
-
-				enemyList[i]->showStatus();
-			}
-		}
-
-
+		// show status at every player turn
 		for (int i=0; i<playerList.size() ;i++){
 			if (playerList[i]->isAlive()==true){
+
+				display.showStatusAll(playerList);
+				cout<<endl;
+
+
+				display.showStatusAll(enemyList);
+
+
 
 				playerTurn(*playerList[i], playerList, enemyList);
 			}
 
 		}
+
 
 		for (int i=0; i<enemyList.size(); i++){		// all enemies are dead
 
@@ -81,6 +74,7 @@ bool enemiesAreAlive=true;
 int main(){
 
 	Inventory inventory;
+	Display display;
 
 
 	PlayerCharacter player("player");
@@ -116,7 +110,7 @@ int main(){
 	enemyList.push_back(&monster3);
 
 
-	combat(playerList, enemyList, inventory);
+	combat(playerList, enemyList, inventory, display);
 
 
 

@@ -22,11 +22,7 @@ Character:: ~Character(){}
 
 // Specific Methods
 
-void Character:: showStatus() const{
 
-	cout << _name << " has " << _HP << " HP and " << _MP << " MP.\n";
-
-}
 void Character:: diminishMP(int MPCost){
 int newMP=_MP-MPCost;
 	setMP(newMP);
@@ -39,7 +35,8 @@ void Character:: diminishHP(int damage){
 	if (HPDamage<0){
 		HPDamage=0;
 	}
-	cout<<" for " << HPDamage << " damage!" << endl;
+
+	display.diminishHP(HPDamage);
 	int newHP=getHP() - HPDamage;
 	if (newHP<0){
 		newHP=0;
@@ -53,7 +50,7 @@ void Character:: attack(Character  &target) const{
 
 	int damage=_Atk + _Weapon.getAttribute();
 
-	cout<< _name<< " attacks " << target.getName();
+	display.attack(this, &target);
 
 	int hitChance=_Ag*randomNumberAdd(1, 100);
 	this_thread::sleep_for(chrono::milliseconds(50));		// to be certain the seed is different
@@ -65,7 +62,7 @@ void Character:: attack(Character  &target) const{
 	}
 
 	else {
-		cout << ".\n" << target.getName() << " managed to dodge!\n";
+		display.dodge(&target)
 	}
 
 }
@@ -74,7 +71,7 @@ void Character::castOffensiveSpell(Spell &spell, Character &target){
 
 	int power=_Mg+spell.getPower();
 
-	cout<< _name << " attacks " << target.getName();
+	display.castOffensiveSpell(this, Spell &spell, Character &target);
 
 	int hitChance=_Ag*randomNumberAdd(1, 100);
 	this_thread::sleep_for(chrono::milliseconds(50));		// to be certain the seed is different
@@ -86,7 +83,7 @@ void Character::castOffensiveSpell(Spell &spell, Character &target){
 	}
 
 	else {
-		cout << ".\n" << target.getName() << " managed to dodge!\n";
+		display.dodge(&target)
 	}
 
 
@@ -103,7 +100,7 @@ void Character:: castHealingSpell(Spell &spell, Character &target){
 	int newHP=power*12;
 
 
-	cout<< _name << " heals " << target.getName() << " for " << newHP << " HP!\n";
+	cout<< _name <<" cast " << spell.getName()<< " and heals " << target.getName() << " for " << newHP << " HP!\n";
 	newHP+=target.getHP();
 
 	if (newHP>_Con*25){
@@ -229,164 +226,5 @@ void Character:: fillSpellListLvlUp(int releventLvl){
 
 }
 
-
-void Character:: playerTurn(std::vector <Character *> &playerList, std::vector <Character *> &enemyList){
-
-	int finishedTurn=0;
-	int choice=0;
-	int MPCost=-1;
-	int choiceTarget=0;
-
-	while (finishedTurn!=1){
-		cout<< "\nWhat do you want to do ?\n > 1: Attack\n > 2: Magic\n" << endl;
-		cin >> choice;
-
-		while (choice !=1 && choice !=2){
-				cout << "!Wrong input!" << endl;
-				cout<< "What do you want to do ?\n > 1: Attack\n > 2: Magic\n" << endl;
-				cin >> choice;
-		}
-
-
-
-		switch (choice){
-			case 1: 	//Physical attack
-
-				choiceTarget=selectTargetPlayer(enemyList);
-
-				if (choiceTarget!=0){
-					attack(*enemyList[choiceTarget-1]);
-					checkIfDied(enemyList, choiceTarget);
-					finishedTurn=1;
-
-				}
-
-				break;
-
-			case 2:		//Magic
-
-				int choiceSpell=0;
-
-				do {
-					do {
-						cout<<"MAGIC:\n";
-
-						cout << "(type 0 to come back) What do you want to cast?\n";
-						for (int i=0; i < (getSpellList().size()); i++){
-								cout << " > " << i+1 << ": ";
-								getSpellList()[i].showAtrributes();
-
-						}
-
-
-						cin>> choiceSpell;
-
-						if ((choiceSpell<0) || (choiceSpell>getSpellList().size())){
-							cout << "!Wrong input!" << endl;
-						}
-
-						else if (choiceSpell!=0){
-								MPCost=getSpellList()[choiceSpell-1].getMPCost();
-						}
-
-
-
-					if (getMP()<MPCost && choiceSpell!=0){
-							cout << "Not Enough Mana! Choose another action!\n";
-						}
-
-					} while((choiceSpell<0 || choiceSpell>getSpellList().size()) || (getMP()<MPCost && choiceSpell!=0 && MPCost!=1));
-
-					if (choiceSpell!=0){
-
-
-						if ((getSpellList()[choiceSpell-1].getType())%2!=0){
-
-								choiceTarget=selectTargetPlayer(getSpellList()[choiceSpell-1].getType());
-
-								if (choiceTarget!=0){
-									finishedTurn=1;
-									diminishMP(getSpellList()[choiceSpell-1].getMPCost());
-
-									if (getSpellList()[choiceSpell-1].getType()==1 || getSpellList()[choiceSpell-1].getType()==7){
-
-										for (int i=0; i<enemyList.size();i++){
-											castOffensiveSpell(getSpellList()[choiceSpell-1], *enemyList[i]);
-											checkIfDied(enemyList, choiceTarget);
-										}
-									}
-
-									else if (getSpellList()[choiceSpell-1].getType()==3 || getSpellList()[choiceSpell-1].getType()==5){
-
-										for (int i=0; i<playerList.size();i++){
-											castHealingSpell(getSpellList()[choiceSpell-1], *playerList[i]);
-										}
-									}
-
-									else {
-										 cout<< "!Wrong function call! The dev is a dimwit\n\tLOCATION playerTurn TargetAll (line 454)\n";
-									}
-
-								}
-						}
-
-
-						else {
-							if (getSpellList()[choiceSpell-1].getType()==0 || getSpellList()[choiceSpell-1].getType()==6 ){
-
-								choiceTarget=selectTargetPlayer(enemyList);
-							}
-
-							else if (getSpellList()[choiceSpell-1].getType()==2 || getSpellList()[choiceSpell-1].getType()==4 ){
-
-								choiceTarget=selectTargetPlayer(playerList);
-							}
-
-							else {
-								cout<< "!Wrong function call! The dev is a dimwit\n\tLOCATION playerTurn selectTarget Single (line 474)\n";
-							}
-						}
-
-						if (choiceTarget!=0){
-							finishedTurn=1;
-
-							diminishMP(getSpellList()[choiceSpell-1].getMPCost());
-
-							if (getSpellList()[choiceSpell-1].getType()==0 || getSpellList()[choiceSpell-1].getType()==6 ){
-
-
-								castOffensiveSpell(getSpellList()[choiceSpell-1], *enemyList[choiceTarget-1]);
-								checkIfDied(enemyList, choiceTarget);
-
-							}
-
-							else if (getSpellList()[choiceSpell-1].getType()==2 || getSpellList()[choiceSpell-1].getType()==4 ){
-
-								castHealingSpell(getSpellList()[choiceSpell-1], *playerList[choiceTarget-1]);
-
-							}
-
-							else {
-								cout<< "!Wrong function call! The dev is a dimwit\n\tLOCATION playerTurn castSpell (line 497)\n";
-							}
-
-
-
-						}
-
-					}
-
-				}while(finishedTurn==0);
-
-				break;
-			}
-
-
-
-		}
-
-}
-
-void Character:: enemyTurn(vector <Character *> &playerList, vector <Character *> &enemyList){}
 
 

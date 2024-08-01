@@ -1,15 +1,16 @@
 # depslib dependency file v1.0
-1721484196 source:c:\users\mathilde\desktop\c++\minitextrpg\main.cpp
+1722525270 source:c:\users\mathilde\desktop\c++\minitextrpg\main.cpp
 	<iostream>
 	"PlayerCharacter.hpp"
 	"EnemyCharacter.hpp"
+	"Display.hpp"
 
 1690388222 c:\users\mathilde\desktop\c++\minitextrpg\include\playercharacter.hpp
 	<algorithm>
 	"Character.hpp"
 	"EnemyCharacter.hpp"
 
-1715465507 c:\users\mathilde\desktop\c++\minitextrpg\include\character.hpp
+1722525496 c:\users\mathilde\desktop\c++\minitextrpg\include\character.hpp
 	<iostream>
 	<vector>
 	<cmath>
@@ -34,7 +35,7 @@
 	<cstdlib>
 	<chrono>
 
-1690455066 source:c:\users\mathilde\desktop\c++\minitextrpg\src\character.cpp
+1722523889 source:c:\users\mathilde\desktop\c++\minitextrpg\src\character.cpp
 	"Character.hpp"
 	"PlayerCharacter.hpp"
 	"EnemyCharacter.hpp"
@@ -3256,4 +3257,12 @@
 
 1689610955 source:c:\users\mathilde\desktop\c++\minitextrpg\src\inventory.cpp
 	"Inventory.hpp"
+
+1722525247 source:c:\users\mathilde\desktop\c++\minitextrpg\src\display.cpp
+	"Display.hpp"
+
+1722525247 c:\users\mathilde\desktop\c++\minitextrpg\include\display.hpp
+	<iostream>
+	"PlayerCharacter.hpp"
+	"EnemyCharacter.hpp"
 

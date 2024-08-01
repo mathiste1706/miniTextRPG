@@ -131,8 +131,6 @@ public:
 	void showStatus() const;
 	int selectTargetPlayer(std::vector <Character *> &targetList);
 	int selectTargetPlayer(bool ally_enemy);
-	void playerTurn(std::vector <Character *> &playerList, std::vector <Character *> &enemyList);
-	void enemyTurn(std::vector <Character *> &playerList, std::vector <Character *> &enemyList);
 	void checkIfDied(std::vector <Character *> &targetList, int choiceTarget) const;
 	void diminishHP(int const damage);
 	void diminishMP(int const MPCost);
