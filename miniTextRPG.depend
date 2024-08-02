@@ -1,26 +1,28 @@
 # depslib dependency file v1.0
-1722525270 source:c:\users\mathilde\desktop\c++\minitextrpg\main.cpp
+1722630041 source:c:\users\mathilde\desktop\c++\minitextrpg\main.cpp
 	<iostream>
 	"PlayerCharacter.hpp"
 	"EnemyCharacter.hpp"
 	"Display.hpp"
 
-1690388222 c:\users\mathilde\desktop\c++\minitextrpg\include\playercharacter.hpp
+1722629231 c:\users\mathilde\desktop\c++\minitextrpg\include\playercharacter.hpp
 	<algorithm>
 	"Character.hpp"
 	"EnemyCharacter.hpp"
 
-1722525496 c:\users\mathilde\desktop\c++\minitextrpg\include\character.hpp
+1722621355 c:\users\mathilde\desktop\c++\minitextrpg\include\character.hpp
 	<iostream>
 	<vector>
 	<cmath>
 	<chrono>
 	<thread>
-	"Equipment.hpp"
+	"Weapon.hpp"
+	"Armor.hpp"
 	"SpellDictionnary.hpp"
 	"Random.hpp"
+	"Display.hpp"
 
-1688831456 c:\users\mathilde\desktop\c++\minitextrpg\include\equipment.hpp
+1722626406 c:\users\mathilde\desktop\c++\minitextrpg\include\equipment.hpp
 	<iostream>
 
 1690454376 c:\users\mathilde\desktop\c++\minitextrpg\include\spelldictionnary.hpp
@@ -35,15 +37,15 @@
 	<cstdlib>
 	<chrono>
 
-1722523889 source:c:\users\mathilde\desktop\c++\minitextrpg\src\character.cpp
+1722621102 source:c:\users\mathilde\desktop\c++\minitextrpg\src\character.cpp
 	"Character.hpp"
 	"PlayerCharacter.hpp"
 	"EnemyCharacter.hpp"
 
-1688831529 source:c:\users\mathilde\desktop\c++\minitextrpg\src\equipment.cpp
+1722610568 source:c:\users\mathilde\desktop\c++\minitextrpg\src\equipment.cpp
 	"Equipment.hpp"
 
-1721480095 source:c:\users\mathilde\desktop\c++\minitextrpg\src\playercharacter.cpp
+1722629538 source:c:\users\mathilde\desktop\c++\minitextrpg\src\playercharacter.cpp
 	"PlayerCharacter.hpp"
 
 1690360990 source:c:\users\mathilde\desktop\c++\minitextrpg\src\random.cpp
@@ -52,14 +54,16 @@
 1690314483 source:c:\users\mathilde\desktop\c++\minitextrpg\src\spell.cpp
 	"Spell.hpp"
 
-1721484242 source:c:\users\mathilde\desktop\c++\minitextrpg\src\enemycharacter.cpp
+1722629956 source:c:\users\mathilde\desktop\c++\minitextrpg\src\enemycharacter.cpp
 	"EnemyCharacter.hpp"
+	"PlayerCharacter.hpp"
+	"Display.hpp"
 
-1690451315 c:\users\mathilde\desktop\c++\minitextrpg\include\enemycharacter.hpp
+1722630252 c:\users\mathilde\desktop\c++\minitextrpg\include\enemycharacter.hpp
 	<algorithm>
 	"Character.hpp"
+	"Equipment.hpp"
 	"Inventory.hpp"
-	"PlayerCharacter.hpp"
 
 1681134483 c:\program files\codeblocks\boost_1_82_0\boost\ptr_container\ptr_vector.hpp
 	<vector>
@@ -3251,18 +3255,35 @@
 	"PlayerCharacter.hpp"
 	"EnemyCharacter.hpp"
 
-1689610955 c:\users\mathilde\desktop\c++\minitextrpg\include\inventory.hpp
+1722613043 c:\users\mathilde\desktop\c++\minitextrpg\include\inventory.hpp
 	<vector>
 	"Equipment.hpp"
 
 1689610955 source:c:\users\mathilde\desktop\c++\minitextrpg\src\inventory.cpp
 	"Inventory.hpp"
 
-1722525247 source:c:\users\mathilde\desktop\c++\minitextrpg\src\display.cpp
+1722626531 source:c:\users\mathilde\desktop\c++\minitextrpg\src\display.cpp
 	"Display.hpp"
-
-1722525247 c:\users\mathilde\desktop\c++\minitextrpg\include\display.hpp
-	<iostream>
+	"Character.hpp"
 	"PlayerCharacter.hpp"
 	"EnemyCharacter.hpp"
+
+1722626460 c:\users\mathilde\desktop\c++\minitextrpg\include\display.hpp
+	<iostream>
+	<vector>
+	"Spell.hpp"
+	"Armor.hpp"
+	"Weapon.hpp"
+
+1722628106 c:\users\mathilde\desktop\c++\minitextrpg\include\weapon.hpp
+	"Equipment.hpp"
+
+1722628106 source:c:\users\mathilde\desktop\c++\minitextrpg\src\weapon.cpp
+	"Weapon.hpp"
+
+1722628003 source:c:\users\mathilde\desktop\c++\minitextrpg\src\armor.cpp
+	"Armor.hpp"
+
+1722628031 c:\users\mathilde\desktop\c++\minitextrpg\include\armor.hpp
+	"Equipment.hpp"
 

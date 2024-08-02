@@ -5,33 +5,30 @@
 class Equipment{
 
 private:
-	bool _type; 		// 0=Weapon and 1=Armor
+
 	std::string _name;
 	int _attribute;
 
 public:
 	// Constructors
 
-	Equipment();
-
-	Equipment(bool type, std :: string name, int attribute);
+	Equipment(std:: string name, int attribute);
 
 
 	// Destroyer
 
-	~Equipment();
+	// To force the class to be abstract
+	virtual ~Equipment();
 
 	// Getter, Setter
-	void setType(bool newType);
 	void setName(std :: string newName);
 	void setAttribute(int newAttribute);
 
-	bool getType() const;
 	std :: string getName() const;
 	int getAttribute() const;
 
-	// Specific Methods
-	void showDesc();
+	virtual bool type() const;
+
 
 
 };

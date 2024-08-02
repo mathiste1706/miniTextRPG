@@ -7,9 +7,11 @@
 #include <chrono>
 #include <thread>
 
-#include "Equipment.hpp"
+#include "Weapon.hpp"
+#include "Armor.hpp"
 #include "SpellDictionnary.hpp"
 #include "Random.hpp"
+#include "Display.hpp"
 
 class Character{
 
@@ -26,8 +28,8 @@ protected:
 	int _Ag;
 
 	// objects equipped
-	Equipment _Weapon;
-	Equipment _Armor;
+	Weapon _Weapon;
+	Armor _Armor;
 
 	// Spells
 	std::vector <Spell> _SpellList;
@@ -41,12 +43,12 @@ public:
 
 	Character(std :: string name);
 
-	Character(std :: string name, int Lvl, int Con, int Mg, int Atk, int Def, int Ag, Equipment Weapon, Equipment Armor);
+	Character(std :: string name, int Lvl, int Con, int Mg, int Atk, int Def, int Ag, Weapon Weapon, Armor Armor);
 
 
 	// Destroyer
 
-	virtual ~Character();
+	~Character();
 
 	// Getter, Setter
 
@@ -86,6 +88,16 @@ public:
 
 		_Ag=newAg; }
 
+	void setArmor(const Armor _equipment){
+		_Armor.setName(_equipment.getName());
+		_Armor.setAttribute(_equipment.getAttribute());
+	}
+
+	void setWeapon(const Weapon _equipment){
+	_Weapon.setName(_equipment.getName());
+	_Weapon.setAttribute(_equipment.getAttribute());
+}
+
 	std :: string getName() const{
 
 		return _name; }
@@ -122,28 +134,32 @@ public:
 
 		return _Ag; }
 
+	Armor getArmor() const{
+		return _Armor;
+	}
+
+	Weapon getWeapon() const{
+		return _Weapon;
+	}
+
 	std::vector <Spell> getSpellList() const{
 
 	return _SpellList; }
 
 	// Specific Methods
 
-	void showStatus() const;
-	int selectTargetPlayer(std::vector <Character *> &targetList);
-	int selectTargetPlayer(bool ally_enemy);
-	void checkIfDied(std::vector <Character *> &targetList, int choiceTarget) const;
-	void diminishHP(int const damage);
+	void diminishHP(int const damage, Display &display);
 	void diminishMP(int const MPCost);
-	void attack(Character &target) const;
+	void attack(Character &target, Display &display) const;
 	void replendishHPAndMP();
 	bool isAlive() const;
 	void LvlUp();
 	void fillSpellListCharCreation();
 	void fillSpellListLvlUp(int releventLvl);
-	void castOffensiveSpell(Spell &spell, Character &target);
-	void castHealingSpell(Spell &spell, Character &target);
-	void castBuffingSpell(Spell &spell, Character &target);
-	void castDebuffingSpell(Spell &spell, Character &target);
+	void castOffensiveSpell(Spell &spell, Character &target, Display &display);
+	void castHealingSpell(Spell &spell, Character &target, Display &display);
+	void castBuffingSpell(Spell &spell, Character &target, Display &display);
+	void castDebuffingSpell(Spell &spell, Character &target, Display &display);
 
 
 

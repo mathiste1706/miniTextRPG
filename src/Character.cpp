@@ -8,11 +8,11 @@ using namespace std;
 
 // Constructors
 
-Character:: Character(): _name("placeholder"), _Lvl(1), _HP(100), _MP(30), _Con(4), _Mg(6), _Atk(10), _Def(5), _Ag(5), _Weapon(Equipment(0, "Rusted sword", 1)), _Armor(Equipment(1, "Rusted armor", 1)) {}
+Character:: Character(): _name("placeholder"), _Lvl(1), _HP(100), _MP(30), _Con(4), _Mg(6), _Atk(10), _Def(5), _Ag(5), _Weapon(Weapon("Rusted sword", 1)), _Armor(Armor("Rusted armor", 1)) {}
 
-Character:: Character(string name): _name(name), _Lvl(1), _HP(100), _MP(30), _Con(4), _Mg(6), _Atk(10), _Def(5), _Ag(5), _Weapon(Equipment(0, "Rusted sword", 1)), _Armor(Equipment(1, "Rusted armor", 1)) {}		 // Con=4 -> Hp=4*25=100, Mg=6 -> MP=6*5=30
+Character:: Character(string name): _name(name), _Lvl(1), _HP(100), _MP(30), _Con(4), _Mg(6), _Atk(10), _Def(5), _Ag(5), _Weapon(Weapon("Rusted sword", 1)), _Armor(Armor("Rusted armor", 1)) {}		 // Con=4 -> Hp=4*25=100, Mg=6 -> MP=6*5=30
 
-Character:: Character(string name, int Lvl, int Con, int Mg, int Atk, int Def, int Ag, Equipment Weapon, Equipment Armor): _name(name), _Lvl(Lvl), _HP(Con*25), _MP(Mg*5), _Con(Con), _Mg(Mg), _Atk(Atk), _Def(Def), _Ag(Ag), _Weapon(Weapon), _Armor(Armor) {}
+Character:: Character(string name, int Lvl, int Con, int Mg, int Atk, int Def, int Ag, Weapon Weapon, Armor Armor): _name(name), _Lvl(Lvl), _HP(Con*25), _MP(Mg*5), _Con(Con), _Mg(Mg), _Atk(Atk), _Def(Def), _Ag(Ag), _Weapon(Weapon), _Armor(Armor) {}
 
 
 // Destroyer
@@ -45,12 +45,12 @@ void Character:: diminishHP(int damage, Display &display){
 }
 
 
-void Character:: attack(Character  &target, , Display &display) const{
+void Character:: attack(Character  &target , Display &display) const{
 
 
 	int damage=_Atk + _Weapon.getAttribute();
 
-	display.attack(this, &target);
+	display.attack(*this, target);
 
 	int hitChance=_Ag*randomNumberAdd(1, 100);
 	this_thread::sleep_for(chrono::milliseconds(50));		// to be certain the seed is different
@@ -58,11 +58,11 @@ void Character:: attack(Character  &target, , Display &display) const{
 
 	if (dodgeChance<hitChance){
 
-		target.diminishHP(damage);
+		target.diminishHP(damage, display);
 	}
 
 	else {
-		display.dodge(&target)
+		display.dodge(target);
 	}
 
 }
@@ -71,7 +71,7 @@ void Character::castOffensiveSpell(Spell &spell, Character &target, Display &dis
 
 	int power=_Mg+spell.getPower();
 
-	display.castOffensiveSpell(this, Spell &spell, Character &target);
+	display.castOffensiveSpell(*this, spell, target);
 
 	int hitChance=_Ag*randomNumberAdd(1, 100);
 	this_thread::sleep_for(chrono::milliseconds(50));		// to be certain the seed is different
@@ -79,17 +79,17 @@ void Character::castOffensiveSpell(Spell &spell, Character &target, Display &dis
 
 	if (dodgeChance<hitChance){
 
-		target.diminishHP(power);
+		target.diminishHP(power, display);
 	}
 
 	else {
-		display.dodge(&target)
+		display.dodge(target);
 	}
 
 
 }
 
-void Character:: castHealingSpell(Spell &spell, Character &target){
+void Character:: castHealingSpell(Spell &spell, Character &target, Display &display){
 
 	int power=power-6;		//power gotten from _Mg
 	if (power<0){
@@ -100,7 +100,7 @@ void Character:: castHealingSpell(Spell &spell, Character &target){
 	int newHP=power*12;
 
 
-	cout<< _name <<" cast " << spell.getName()<< " and heals " << target.getName() << " for " << newHP << " HP!\n";
+	display.castHealingSpell(*this, spell, target, newHP);
 	newHP+=target.getHP();
 
 	if (newHP>_Con*25){
@@ -113,8 +113,8 @@ void Character:: castHealingSpell(Spell &spell, Character &target){
 
 }
 
-void Character:: castBuffingSpell(Spell &spell, Character &target){}
-void Character:: castDebuffingSpell(Spell &spell, Character &target){}
+void Character:: castBuffingSpell(Spell &spell, Character &target, Display &display){}
+void Character:: castDebuffingSpell(Spell &spell, Character &target, Display &display){}
 
 
 void Character:: replendishHPAndMP(){

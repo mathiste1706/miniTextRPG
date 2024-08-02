@@ -1,8 +1,5 @@
 #include "PlayerCharacter.hpp"
 
-void playerTurn(PlayerCharacter &active, std::vector <PlayerCharacter *> &playerList, std::vector <PlayerCharacter *> &enemyList);
-
-
 using namespace std;
 
  // Con=4 is Hp=4*25=100, Mg=6 is MP=6*5=30
@@ -11,7 +8,7 @@ PlayerCharacter:: PlayerCharacter(): Character(), _exp(0) {}
 
 PlayerCharacter:: PlayerCharacter(string name): Character(name), _exp(0) {}
 
-PlayerCharacter:: PlayerCharacter(string name, int Lvl, int Con, int Mg, int Atk, int Def, int Ag, Equipment Weapon, Equipment Armor, int exp): Character(name, Lvl, Con, Mg, Atk, Def, Ag, Weapon, Armor), _exp(exp) {}
+PlayerCharacter:: PlayerCharacter(string name, int Lvl, int Con, int Mg, int Atk, int Def, int Ag, Weapon Weapon, Armor Armor, int exp): Character(name, Lvl, Con, Mg, Atk, Def, Ag, Weapon, Armor), _exp(exp) {}
 
 
 PlayerCharacter:: ~PlayerCharacter(){}
@@ -66,10 +63,6 @@ int PlayerCharacter:: getTrainedAg() const{
 return _trainedAg;
 }
 
-
-void PlayerCharacter:: showStats() const{
-	cout << _name << " is level " << _Lvl << " and has " << _Con << " Constitution that grants " << _Con*25 << " HP, " << _Mg << " Magic that gives " << _Mg*5 << " MP, " << _Atk << " Attack, " << _Def << " Defense, " << _Ag << " Agility.\n";
-}
 
 void PlayerCharacter:: levelUp(){
 
@@ -264,14 +257,14 @@ void PlayerCharacter:: attributePoints(std::vector <PlayerCharacter> &playerList
 
 }
 
-void checkIfDied(vector <EnemyCharacter *> &targetList, int choiceTarget) {
+void PlayerCharacter:: checkIfDied(vector <EnemyCharacter *> &targetList, int choiceTarget, Display display) {
 
 	if (targetList[choiceTarget-1]->isAlive()==false){
 		cout << targetList[choiceTarget-1]->getName() << " has died!\n";
 	}
 }
 
-int selectTargetPlayer(vector <PlayerCharacter *> &targetList){
+int PlayerCharacter:: selectTargetPlayer(vector <PlayerCharacter *> &targetList, Display display){
 
 
 	int choiceTarget=0;
@@ -311,7 +304,7 @@ int selectTargetPlayer(vector <PlayerCharacter *> &targetList){
 }
 
 
-int selectTargetPlayer(vector <EnemyCharacter *> &targetList){
+int PlayerCharacter:: selectTargetPlayer(vector <EnemyCharacter *> &targetList, Display display){
 
 	int choiceTarget=0;
 	int nbTarget=0;
@@ -353,7 +346,7 @@ int selectTargetPlayer(vector <EnemyCharacter *> &targetList){
 }
 
 
-int PlayerCharacter:: selectTargetPlayer(int const type){
+int PlayerCharacter:: PlayerCharacter:: selectTargetPlayer(int const type){
 
 int choiceTarget=0;
 
@@ -388,7 +381,7 @@ int choiceTarget=0;
 
 
 
-void playerTurn(PlayerCharacter &active ,vector <PlayerCharacter *> &playerList, vector <EnemyCharacter *> &enemyList){
+void PlayerCharacter:: playerTurn(vector <PlayerCharacter *> &playerList, vector <EnemyCharacter *> &enemyList, Display display){
 
 
 	int finishedTurn=0;
@@ -420,12 +413,12 @@ void playerTurn(PlayerCharacter &active ,vector <PlayerCharacter *> &playerList,
 		switch (choice){
 			case 1: 	//Physical attack
 
-				choiceTarget=selectTargetPlayer(enemyList);
+				choiceTarget=selectTargetPlayer(enemyList, display);
 
 				if (choiceTarget!=0){
 					finishedTurn=1;
-					active.attack(*enemyList[choiceTarget-1]);
-					checkIfDied(enemyList, choiceTarget);
+					this->attack(*enemyList[choiceTarget-1], display);
+					checkIfDied(enemyList, choiceTarget, display);
 
 				}
 
@@ -440,60 +433,60 @@ void playerTurn(PlayerCharacter &active ,vector <PlayerCharacter *> &playerList,
 						cout<<"MAGIC:\n";
 
 						cout << "(type 0 to come back) What do you want to cast?\n";
-						for (int i=0; i < (active.getSpellList().size()); i++){
+						for (int i=0; i < (this->getSpellList().size()); i++){
 								cout << " > " << i+1 << ": ";
-								active.getSpellList()[i].showAtrributes();
+								this->getSpellList()[i].showAtrributes();
 
 						}
 
 
 						cin>> choiceSpell;
 
-						if ((choiceSpell<0) || (choiceSpell>active.getSpellList().size())){
+						if ((choiceSpell<0) || (choiceSpell>this->getSpellList().size())){
 							cout << "!Wrong input!" << endl;
 						}
 
 						else if (choiceSpell!=0){
-								MPCost=active.getSpellList()[choiceSpell-1].getMPCost();
+								MPCost=this->getSpellList()[choiceSpell-1].getMPCost();
 						}
 
 
 
-					if (active.getMP()<MPCost && choiceSpell!=0){
+					if (this->getMP()<MPCost && choiceSpell!=0){
 							cout << "Not Enough Mana! Choose another action!\n";
 						}
 
-					} while((choiceSpell<0 || choiceSpell>active.getSpellList().size()) || (active.getMP()<MPCost && choiceSpell!=0 && MPCost!=1));
+					} while((choiceSpell<0 || choiceSpell>this->getSpellList().size()) || (this->getMP()<MPCost && choiceSpell!=0 && MPCost!=1));
 
 					if (choiceSpell!=0){
 
 
 						// Target All
-						if ((active.getSpellList()[choiceSpell-1].getType())%2!=0){
+						if ((this->getSpellList()[choiceSpell-1].getType())%2!=0){
 
-								choiceTarget=active.selectTargetPlayer(active.getSpellList()[choiceSpell-1].getType());
+								choiceTarget=this->selectTargetPlayer(this->getSpellList()[choiceSpell-1].getType());
 
 								if (choiceTarget!=0){
 									finishedTurn=1;
-									active.diminishMP(active.getSpellList()[choiceSpell-1].getMPCost());
+									this->diminishMP(this->getSpellList()[choiceSpell-1].getMPCost());
 
 
 									//Spell on All Enemies
-									if (active.getSpellList()[choiceSpell-1].getType()==1 || active.getSpellList()[choiceSpell-1].getType()==7){
+									if (this->getSpellList()[choiceSpell-1].getType()==1 || this->getSpellList()[choiceSpell-1].getType()==7){
 
 										for (int i=0; i<enemyList.size();i++){
 											if (enemyList[i]->isAlive()==true){
-												active.castOffensiveSpell(active.getSpellList()[choiceSpell-1], *enemyList[i]);
-												checkIfDied(enemyList, choiceTarget);
+												this->castOffensiveSpell(this->getSpellList()[choiceSpell-1], *enemyList[i], display);
+												checkIfDied(enemyList, choiceTarget, display);
 											}
 										}
 									}
 
 									//Spell on All Party
-									else if (active.getSpellList()[choiceSpell-1].getType()==3 || active.getSpellList()[choiceSpell-1].getType()==5){
+									else if (this->getSpellList()[choiceSpell-1].getType()==3 || this->getSpellList()[choiceSpell-1].getType()==5){
 										for (int i=0; i<playerList.size();i++){
 											if (playerList[i]->isAlive()==true){
-												active.castHealingSpell(active.getSpellList()[choiceSpell-1], *playerList[i]);
+												this->castHealingSpell(this->getSpellList()[choiceSpell-1], *playerList[i], display);
 											}
 										}
 									}
@@ -508,15 +501,15 @@ void playerTurn(PlayerCharacter &active ,vector <PlayerCharacter *> &playerList,
 						//Target Single
 						else {
 							//Enemy
-							if (active.getSpellList()[choiceSpell-1].getType()==0 || active.getSpellList()[choiceSpell-1].getType()==6 ){
+							if (this->getSpellList()[choiceSpell-1].getType()==0 || this->getSpellList()[choiceSpell-1].getType()==6 ){
 
-								choiceTarget=selectTargetPlayer(enemyList);
+								choiceTarget=selectTargetPlayer(enemyList, display);
 							}
 
 							//Ally
-							else if (active.getSpellList()[choiceSpell-1].getType()==2 || active.getSpellList()[choiceSpell-1].getType()==4 ){
+							else if (this->getSpellList()[choiceSpell-1].getType()==2 || this->getSpellList()[choiceSpell-1].getType()==4 ){
 
-								choiceTarget=selectTargetPlayer(playerList);
+								choiceTarget=selectTargetPlayer(playerList, display);
 							}
 
 							else {
@@ -527,19 +520,19 @@ void playerTurn(PlayerCharacter &active ,vector <PlayerCharacter *> &playerList,
 							if (choiceTarget!=0){
 								finishedTurn=1;
 
-								active.diminishMP(active.getSpellList()[choiceSpell-1].getMPCost());
+								this->diminishMP(this->getSpellList()[choiceSpell-1].getMPCost());
 
-								if (active.getSpellList()[choiceSpell-1].getType()==0 || active.getSpellList()[choiceSpell-1].getType()==6 ){
+								if (this->getSpellList()[choiceSpell-1].getType()==0 || this->getSpellList()[choiceSpell-1].getType()==6 ){
 
 
-									active.castOffensiveSpell(active.getSpellList()[choiceSpell-1], *enemyList[choiceTarget-1]);
-									checkIfDied(enemyList, choiceTarget);
+									this->castOffensiveSpell(this->getSpellList()[choiceSpell-1], *enemyList[choiceTarget-1], display);
+									checkIfDied(enemyList, choiceTarget, display);
 
 								}
 
-								else if (active.getSpellList()[choiceSpell-1].getType()==2 || active.getSpellList()[choiceSpell-1].getType()==4 ){
+								else if (this->getSpellList()[choiceSpell-1].getType()==2 || this->getSpellList()[choiceSpell-1].getType()==4 ){
 
-									active.castHealingSpell(active.getSpellList()[choiceSpell-1], *playerList[choiceTarget-1]);
+									this->castHealingSpell(this->getSpellList()[choiceSpell-1], *playerList[choiceTarget-1], display);
 
 								}
 

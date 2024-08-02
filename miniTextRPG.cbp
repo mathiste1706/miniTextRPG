@@ -38,7 +38,9 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="include/Armor.hpp" />
 		<Unit filename="include/Character.hpp" />
+		<Unit filename="include/Display.hpp" />
 		<Unit filename="include/EnemyCharacter.hpp" />
 		<Unit filename="include/Equipment.hpp" />
 		<Unit filename="include/Inventory.hpp" />
@@ -46,14 +48,18 @@
 		<Unit filename="include/Random.hpp" />
 		<Unit filename="include/Spell.hpp" />
 		<Unit filename="include/SpellDictionnary.hpp" />
+		<Unit filename="include/Weapon.hpp" />
 		<Unit filename="main.cpp" />
+		<Unit filename="src/Armor.cpp" />
 		<Unit filename="src/Character.cpp" />
+		<Unit filename="src/Display.cpp" />
 		<Unit filename="src/EnemyCharacter.cpp" />
 		<Unit filename="src/Equipment.cpp" />
 		<Unit filename="src/Inventory.cpp" />
 		<Unit filename="src/PlayerCharacter.cpp" />
 		<Unit filename="src/Random.cpp" />
 		<Unit filename="src/Spell.cpp" />
+		<Unit filename="src/Weapon.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

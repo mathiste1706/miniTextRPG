@@ -29,7 +29,7 @@ bool enemiesAreAlive=true;
 
 
 
-				playerTurn(*playerList[i], playerList, enemyList);
+				playerList[i]->playerTurn(playerList, enemyList, display);
 			}
 
 		}
@@ -43,7 +43,7 @@ bool enemiesAreAlive=true;
 			}
 	}
 
-		enemyTurn(enemyList, playerList);
+		enemyList[0]->enemyTurn(enemyList, playerList, display);
 
 
 
@@ -62,7 +62,7 @@ bool enemiesAreAlive=true;
 	}
 	if (partyIsAlive==true){
 			cout << "\nEnemies defeated! You Won !\n";
-			giveRewards(enemyList, playerList, inventory);
+			enemyList[0]->giveRewards(enemyList, playerList, inventory, display);
 		}
 	else if (enemiesAreAlive==true){
 			cout << "\nYou Have Perished!\nGAME OVER...\n";
@@ -86,12 +86,12 @@ int main(){
 
 
 	vector <Loot> lootList1={Loot()};
-	vector <Loot> lootList2={Loot(100, Equipment(0, "Excalibur", 100)), Loot(100, Equipment(1, "Shiniest Armor", 100))};
+	vector <Loot> lootList2={Loot(100, Weapon("Excalibur", 100)), Loot(100, Armor("Shiniest Armor", 100))};
 
-	EnemyCharacter  monster1("monster 1", 1, 2,3, 5,2,0, Equipment(0, "Rusted sword", 1), Equipment(1, "Rusted armor", 1), 10, 25, lootList1);
-	EnemyCharacter  monster2("monster 2", 1, 2,3, 5,2,0, Equipment(0, "Rusted sword", 1), Equipment(1, "Rusted armor", 1), 10, 25, lootList1);
-	EnemyCharacter  monster3("monster 3", 1, 2,3, 5,2,0, Equipment(0, "Rusted sword", 1), Equipment(1, "Rusted armor", 1), 10, 25, lootList1);
-	EnemyCharacter  superMonster("Super monster", 2, 1,3, 10,2,5, Equipment(0, "Rusted sword", 1), Equipment(1, "Rusted armor", 1), 100, 250, lootList2);
+	EnemyCharacter  monster1("monster 1", 1, 2,3, 5,2,0, Weapon("Rusted sword", 1), Armor("Rusted armor", 1), 10, 25, lootList1);
+	EnemyCharacter  monster2("monster 2", 1, 2,3, 5,2,0, Weapon("Rusted sword", 1), Armor("Rusted armor", 1), 10, 25, lootList1);
+	EnemyCharacter  monster3("monster 3", 1, 2,3, 5,2,0, Weapon("Rusted sword", 1), Armor("Rusted armor", 1), 10, 25, lootList1);
+	EnemyCharacter  superMonster("Super monster", 2, 1,3, 10,2,5, Weapon("Rusted sword", 1), Armor("Rusted armor", 1), 100, 250, lootList2);
 	monster2.fillSpellListCharCreation();
 	superMonster.fillSpellListCharCreation();
 

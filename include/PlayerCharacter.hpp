@@ -4,7 +4,7 @@
 #include <algorithm>
 
 #include "Character.hpp"
-
+#include "EnemyCharacter.hpp"
 
 class PlayerCharacter: public Character{
 
@@ -23,9 +23,9 @@ public:
 
 	PlayerCharacter();
 	PlayerCharacter(std :: string name);
-	PlayerCharacter(std :: string name, int Lvl, int Con, int Mg, int Atk, int Def, int Ag, Equipment Weapon, Equipment Armor, int exp);
+	PlayerCharacter(std :: string name, int Lvl, int Con, int Mg, int Atk, int Def, int Ag, Weapon Weapon, Armor Armor, int exp);
 
-	virtual ~PlayerCharacter();
+	~PlayerCharacter();
 
 
 	void setExp(int const newExp);
@@ -48,14 +48,11 @@ public:
 	void attributePoints(std::vector <PlayerCharacter> &playerList, int gold);
 	int selectTargetPlayer(int type);
 
+	void checkIfDied(std::vector <EnemyCharacter *> &targetList, int choiceTarget, Display display);
+	int selectTargetPlayer(std::vector <PlayerCharacter *> &targetList, Display display);
+	int selectTargetPlayer(std::vector <EnemyCharacter *> &targetList, Display display);
+	void playerTurn(std::vector <PlayerCharacter *> &playerList, std::vector <EnemyCharacter *> &enemyList, Display display);
+
 };
-
-#include "EnemyCharacter.hpp"
-
-
-void checkIfDied(std::vector <PlayerCharacter *> &targetList, int choiceTarget);
-int selectTargetPlayer(std::vector <EnemyCharacter *> &targetList);
-int selectTargetPlayer(std::vector <PlayerCharacter *> &targetList);
-void playerTurn(PlayerCharacter &active, std::vector <PlayerCharacter *> &playerList, std::vector <EnemyCharacter *> &enemyList);
 
 #endif // PLAYERCHARACTER_HPP_INCLUDED
