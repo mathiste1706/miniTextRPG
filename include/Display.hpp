@@ -16,20 +16,42 @@ class Display
 		Display();
 		~Display();
 
-		void showStatus(const Character* character)const;
-		void showStatusAll(const std::vector<PlayerCharacter*> &playerList) const;
-		void showStatusAll(const std::vector<EnemyCharacter*> &enemyList) const;
+		static void wrongInput();
+		static void notEnoughGold();
+		static void showPlayerListAll(const std::vector<PlayerCharacter *>& playerList);
+		static int showPlayerListAlive(const std::vector<PlayerCharacter *>& playerList);
+		static int showPlayerListDead(const std::vector<PlayerCharacter *>& playerList);
+		static int showEnemyList(const std::vector<EnemyCharacter *>& enemyList);
 
-		void attack(const Character &attacker, const Character  &target) const;
-		void diminishHP(int damage) const;
-		void dodge(const Character  &target) const;
-		void castOffensiveSpell(const Character &caster, const Spell &spell, const Character &target) const;
-		void castHealingSpell(const Character &caster, const Spell &spell, const Character &target, int newHP) const;
+		static void showStatus(const Character* character);
+		static void showStatusAll(const std::vector<PlayerCharacter*> &playerList) ;
+		static void showStatusAll(const std::vector<EnemyCharacter*> &enemyList) ;
 
-		void showStats(const Character &character) const;
-		void showWeapon(const Weapon &Weapon) const;
-		void showArmor(const Armor &Armor) const;
-		void showStatsAndEquipment(const Character &character) const;
+		static void attack(const Character &attacker, const Character  &target) ;
+		static void diminishHP(int damage) ;
+		static void dodge(const Character  &target) ;
+		static void castOffensiveSpell(const Character &caster, const Spell &spell, const Character &target) ;
+		static void castHealingSpell(const Character &caster, const Spell &spell, const Character &target, int newHP) ;
+
+		static void showStats(const Character &character) ;
+		static void showWeapon(const Weapon &Weapon) ;
+		static void showArmor(const Armor &Armor) ;
+		static void showStatsAndEquipment(const Character &character) ;
+
+		static void whoTrain() ;
+		static void showStatsOf() ;
+		static void increaseWhichStats() ;
+		static void alreadyMaxTrained(const PlayerCharacter * playerChara, const std::string& statName) ;
+		static void showStatup(int newStatValue, int increase, const std::string& statName) ;
+		static void showGoodBye() ;
+
+		static void checkIfDied(const Character &target);
+		static void selectTarget();
+		static void selectAction();
+		static  void magicMenu(const PlayerCharacter &playerCharacter);
+		static  void notEnoughMana();
+		static void selectAllEnemies();
+		static void selectAllAllies();
 
 };
 

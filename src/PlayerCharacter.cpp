@@ -114,7 +114,7 @@ void PlayerCharacter:: levelUp(){
 
 }
 
-void PlayerCharacter:: attributePoints(std::vector <PlayerCharacter> &playerList, int gold){
+void PlayerCharacter:: attributePoints(const vector <PlayerCharacter *> &playerList, const int gold) const{
 
 	int choiceCharacter=0;
 	int choiceStat=0;
@@ -122,32 +122,30 @@ void PlayerCharacter:: attributePoints(std::vector <PlayerCharacter> &playerList
 	bool selectedStat=false;
 
 	do{
-		cout << "(type 0 to go back) Who do you want to train?\n";
+		Display::whoTrain();
 
-		for (int i=0; i<playerList.size(); i++){
-				cout << " > " << i+1 << " : " << playerList[(choiceCharacter-1)].getName();
-		}
+		Display::showPlayerListAll(playerList);
 		cin >> choiceCharacter;
 
 		if(choiceCharacter<0 && choiceCharacter>playerList.size()){
-			cout << "!Wrong input!\n";
+			Display::wrongInput();
 		}
 
 	}while(choiceCharacter<0 && choiceCharacter>playerList.size());
 
 	if (choiceCharacter>0){
-		cout <<"This is the current Status of ";
+		Display::showStatsOf();
 
-		 playerList[(choiceCharacter-1)].showStats();
+		Display::showStats(Character(playerList[(choiceCharacter-1)]));
 
 
 		do{
-		cout << "(type 0 to go back) What stat do you want to increase?\n > 1 Con\n 2 > Mg\n 3 > Atk\n 4 > Def\n 5 > Ag";
+		Display::increaseWhichStats();
 
 		cin >> choiceStat;
 
 		if(choiceStat<0 && choiceStat>playerList.size()){
-			cout << "!Wrong input!\n";
+			Display::wrongInput();
 		}
 
 
@@ -156,91 +154,96 @@ void PlayerCharacter:: attributePoints(std::vector <PlayerCharacter> &playerList
 
 
 			case 1:
-				goldCost=_trainedCon*50;
+				goldCost=(1+_trainedCon)*50;
 
 				if (_trainedCon==MAX_TRAINED){
-					cout <<  playerList[(choiceCharacter-1)].getName() << "has already trained this stat to the maximum!\n";
+					Display::alreadyMaxTrained(playerList[(choiceCharacter-1)], "Con");
 				}
 
 				else if (gold<goldCost){
-					cout << "You do not have enough gold!\n";
+					Display::notEnoughGold();
 				}
 
 				else {
-					int newCon= (playerList[(choiceCharacter-1)].getCon())+1;
-					 playerList[(choiceCharacter-1)].setCon(newCon);
+					int newCon= (playerList[(choiceCharacter-1)]->getCon())+1;
+					playerList[(choiceCharacter-1)]->setCon(newCon);
+					Display::showStatup(newCon, 1, "Con");
 					selectedStat=true;
 				}
 				break;
 
 				case 2:
-				goldCost=_trainedMg*50;
+				goldCost=(1+_trainedMg)*50;
 
 				if (_trainedMg==MAX_TRAINED){
-					cout <<  playerList[(choiceCharacter-1)].getName() << "has already trained this stat to the maximum!\n";
+					Display::alreadyMaxTrained(playerList[(choiceCharacter-1)], "Mg");
 				}
 
 				else if (gold<goldCost){
-					cout << "You do not have enough gold!\n";
+					Display::notEnoughGold();
 				}
 
 				else {
-					int newMg= ( playerList[(choiceCharacter-1)].getMg())+1;
-					 playerList[(choiceCharacter-1)].setMg(newMg);
+					int newMg= ( playerList[(choiceCharacter-1)]->getMg())+1;
+					 playerList[(choiceCharacter-1)]->setMg(newMg);
+					Display::showStatup(newMg, 1, "Mg");
 					selectedStat=true;
 				}
 				break;
 
 				case 3:
-				goldCost=_trainedAtk*50;
+				goldCost=(1+_trainedAtk)*50;
 
 				if (_trainedAtk==MAX_TRAINED){
-					cout <<  playerList[(choiceCharacter-1)].getName() << "has already trained this stat to the maximum!\n";
+					Display::alreadyMaxTrained(playerList[(choiceCharacter-1)], "Atk");
 				}
 
 				else if (gold<goldCost){
-					cout << "You do not have enough gold!\n";
+					Display::notEnoughGold();
 				}
 
 				else {
-					int newAtk= ( playerList[(choiceCharacter-1)].getAtk())+1;
-					 playerList[(choiceCharacter-1)].setAtk(newAtk);
+					int newAtk= ( playerList[(choiceCharacter-1)]->getAtk())+1;
+					 playerList[(choiceCharacter-1)]->setAtk(newAtk);
+					Display::showStatup(newAtk, 1, "Atk");
 					selectedStat=true;
 				}
 				break;
 
 				case 4:
-				goldCost=_trainedDef*50;
+				goldCost=(1+_trainedDef)*50;
 
 				if (_trainedDef==MAX_TRAINED){
-					cout <<  playerList[(choiceCharacter-1)].getName() << "has already trained this stat to the maximum!\n";
+					Display::alreadyMaxTrained(playerList[(choiceCharacter-1)], "Def");
 				}
 
 				else if (gold<goldCost){
-					cout << "You do not have enough gold!\n";
+					Display::notEnoughGold();
 				}
 
 				else {
-					int newDef= ( playerList[(choiceCharacter-1)].getDef())+1;
-					 playerList[(choiceCharacter-1)].setDef(newDef);
+					int newDef= ( playerList[(choiceCharacter-1)]->getDef())+1;
+					playerList[(choiceCharacter-1)]->setDef(newDef);
+					Display::showStatup(newDef, 1, "Def");
 					selectedStat=true;
 				}
 				break;
 
 				case 5:
-				goldCost=_trainedAg*50;
+				goldCost=(1+_trainedAg)*50;
 
 				if (_trainedAg==MAX_TRAINED){
-					cout <<  playerList[(choiceCharacter-1)].getName() << "has already trained this stat to the maximum!\n";
+					Display::alreadyMaxTrained(playerList[(choiceCharacter-1)], "Con");
 				}
 
 				else if (gold<goldCost){
-					cout << "You do not have enough gold!\n";
+					Display::notEnoughGold();
 				}
 
 				else {
-					int newAg= ( playerList[(choiceCharacter-1)].getAg())+1;
-					 playerList[(choiceCharacter-1)].setAg(newAg);
+					int newAg= ( playerList[(choiceCharacter-1)]->getAg())+1;
+					playerList[(choiceCharacter-1)]->setAg(newAg);
+					Display::showStatup(newAg, 1, "Ag");
 					selectedStat=true;
 				}
 				break;
@@ -251,160 +254,91 @@ void PlayerCharacter:: attributePoints(std::vector <PlayerCharacter> &playerList
 	}
 
 	else {
-		cout << "Goodbye, come back later!\n";
+		Display::showGoodBye();
 	}
 
 
 }
 
-void PlayerCharacter:: checkIfDied(vector <EnemyCharacter *> &targetList, int choiceTarget, Display display) {
+void PlayerCharacter:: checkIfDied(const vector <EnemyCharacter *> &targetList, const int choiceTarget) {
 
-	if (targetList[choiceTarget-1]->isAlive()==false){
-		cout << targetList[choiceTarget-1]->getName() << " has died!\n";
-	}
+	Display::checkIfDied(targetList[choiceTarget-1]);
+
 }
 
-int PlayerCharacter:: selectTargetPlayer(vector <PlayerCharacter *> &targetList, Display display){
+int PlayerCharacter:: selectTargetPlayer(vector <PlayerCharacter *> &targetList){
 
 
 	int choiceTarget=0;
-	int nbTarget=0;
-	vector <PlayerCharacter *> subList;
+	int nbTarget;
 
 	do {
-		nbTarget=0;
 
-		cout<< "(type 0 to go back) Select your target: \n";
+		Display::selectTarget();
 
-		for (int i=0; i<targetList.size(); i++){
-
-				if (targetList[i]->isAlive()==true){
-
-					nbTarget++;
-					cout << " > " << nbTarget << ": " << targetList[i]->getName() << endl;
-					subList.push_back(targetList[i]);
-				}
-		}
+		nbTarget=Display:: showPlayerListAlive(targetList);
 
 		cin>> choiceTarget;
 
 		if (choiceTarget<0 || choiceTarget>nbTarget) {
-			cout << "!Wrong input!" << endl;
+			Display:: wrongInput();
 		}
 
 	} while (choiceTarget<0 || choiceTarget>nbTarget);
-
-	if (choiceTarget!=0){
-		vector<PlayerCharacter*>::iterator target=find(targetList.begin(), targetList.end(), subList[choiceTarget-1]);
-		choiceTarget=target-targetList.begin()+1;
-	}
 
 	return choiceTarget;
 
 }
 
 
-int PlayerCharacter:: selectTargetPlayer(vector <EnemyCharacter *> &targetList, Display display){
+int PlayerCharacter:: selectTargetPlayer(vector <EnemyCharacter *> &targetList){
 
 	int choiceTarget=0;
-	int nbTarget=0;
-	vector <EnemyCharacter *> subList;
+	int nbTarget;
 
 	do {
-		nbTarget=0;
-		subList.clear();
 
-		cout<< "(type 0 to go back) Select your target: \n";
+		Display:: selectTarget();
 
-		for (int i=0; i<targetList.size(); i++){
-
-
-				if (targetList[i]->isAlive()==true){
-
-					nbTarget++;
-					cout << " > " << nbTarget << ": " << targetList[i]->getName() << endl;
-					subList.push_back(targetList[i]);
-				}
-		}
+		nbTarget=Display:: showEnemyList(targetList);
 
 		cin>> choiceTarget;
 
 		if (choiceTarget<0 || choiceTarget>nbTarget) {
-			cout << "!Wrong input!" << endl;
+			Display:: wrongInput();
 		}
 
 	} while (choiceTarget<0 || choiceTarget>nbTarget);
 
-
-	if (choiceTarget!=0){
-		vector<EnemyCharacter*>::iterator target=find(targetList.begin(), targetList.end(), subList[choiceTarget-1]);
-		choiceTarget=target-targetList.begin()+1;
-	}
-
 	return choiceTarget;
 
 }
 
 
-int PlayerCharacter:: PlayerCharacter:: selectTargetPlayer(int const type){
-
-int choiceTarget=0;
-
-	do{
-
-		cout<< "(type 0 to go back) Confirm your target: \n1 > All";
-
-		if (type==1 || type==7){
-			cout << "Enemies\n";
-		}
-
-		else if (type==3|| type==5){
-			cout << "Allies\n";
-		}
-
-		else{
-			cout<< "!Wrong function call! The dev is a dimwit\n\tLOCATION selectTargetPlayer (for all) (line 373)\n";
-		}
-
-		cin>> choiceTarget;
-
-		if (choiceTarget!=0 || choiceTarget!=1) {
-			cout << "!Wrong input!" << endl;
-		}
-
-
-	} while (choiceTarget!=0 || choiceTarget!=1);
-
-
-	return choiceTarget;
-}
-
-
-
-void PlayerCharacter:: playerTurn(vector <PlayerCharacter *> &playerList, vector <EnemyCharacter *> &enemyList, Display display){
+void PlayerCharacter:: playerTurn(vector <PlayerCharacter *> &playerList, vector <EnemyCharacter *> &enemyList){
 
 
 	int finishedTurn=0;
 	int choice=0;
 	int MPCost=-1;
 	int choiceTarget=0;
-	bool allEnemiesDied=1;
+	bool allEnemiesDied=true;
 
 	for (int i=0; i<enemyList.size(); i++){
 
 		if (enemyList[i]->isAlive()== true){
-			allEnemiesDied=0;
+			allEnemiesDied=false;
 			break;
 		}
 	}
 
 	while (finishedTurn!=1 && allEnemiesDied==0){
-		cout<< "\nWhat do you want to do ?\n > 1: Attack\n > 2: Magic\n" << endl;
+		Display::selectAction();
 		cin >> choice;
 
 		while (choice !=1 && choice !=2){
-				cout << "!Wrong input!" << endl;
-				cout<< "What do you want to do ?\n > 1: Attack\n > 2: Magic\n" << endl;
+				Display:: wrongInput();
+				Display:: selectAction();
 				cin >> choice;
 		}
 
@@ -413,12 +347,12 @@ void PlayerCharacter:: playerTurn(vector <PlayerCharacter *> &playerList, vector
 		switch (choice){
 			case 1: 	//Physical attack
 
-				choiceTarget=selectTargetPlayer(enemyList, display);
+				choiceTarget=selectTargetPlayer(enemyList);
 
 				if (choiceTarget!=0){
 					finishedTurn=1;
-					this->attack(*enemyList[choiceTarget-1], display);
-					checkIfDied(enemyList, choiceTarget, display);
+					this->attack(*enemyList[choiceTarget-1]);
+					checkIfDied(enemyList, choiceTarget);
 
 				}
 
@@ -430,31 +364,22 @@ void PlayerCharacter:: playerTurn(vector <PlayerCharacter *> &playerList, vector
 
 				do {
 					do {
-						cout<<"MAGIC:\n";
-
-						cout << "(type 0 to come back) What do you want to cast?\n";
-						for (int i=0; i < (this->getSpellList().size()); i++){
-								cout << " > " << i+1 << ": ";
-								this->getSpellList()[i].showAtrributes();
-
-						}
+						Display::magicMenu(*this);
 
 
 						cin>> choiceSpell;
 
 						if ((choiceSpell<0) || (choiceSpell>this->getSpellList().size())){
-							cout << "!Wrong input!" << endl;
+							Display::wrongInput();
 						}
 
 						else if (choiceSpell!=0){
 								MPCost=this->getSpellList()[choiceSpell-1].getMPCost();
 						}
 
-
-
 					if (this->getMP()<MPCost && choiceSpell!=0){
-							cout << "Not Enough Mana! Choose another action!\n";
-						}
+						Display:: notEnoughMana();
+					}
 
 					} while((choiceSpell<0 || choiceSpell>this->getSpellList().size()) || (this->getMP()<MPCost && choiceSpell!=0 && MPCost!=1));
 
@@ -463,10 +388,28 @@ void PlayerCharacter:: playerTurn(vector <PlayerCharacter *> &playerList, vector
 
 						// Target All
 						if ((this->getSpellList()[choiceSpell-1].getType())%2!=0){
+							Display:: selectTarget();
 
-								choiceTarget=this->selectTargetPlayer(this->getSpellList()[choiceSpell-1].getType());
+							do {
 
-								if (choiceTarget!=0){
+								if (this->getSpellList()[choiceSpell-1].getType()==1 or this->getSpellList()[choiceSpell-1].getType()==7) {
+									Display:: selectAllEnemies();
+									cin >>choiceTarget;
+								}
+
+								else if (this->getSpellList()[choiceSpell-1].getType()==3 or this->getSpellList()[choiceSpell-1].getType()==5) {
+									Display::selectAllAllies();
+									cin >>choiceTarget;
+
+								}
+								else {
+									cout << "Something went wrong in when select all";
+								}
+
+							}while(choiceTarget!=1);
+
+
+								if (choiceTarget==1){
 									finishedTurn=1;
 									this->diminishMP(this->getSpellList()[choiceSpell-1].getMPCost());
 
@@ -476,8 +419,8 @@ void PlayerCharacter:: playerTurn(vector <PlayerCharacter *> &playerList, vector
 
 										for (int i=0; i<enemyList.size();i++){
 											if (enemyList[i]->isAlive()==true){
-												this->castOffensiveSpell(this->getSpellList()[choiceSpell-1], *enemyList[i], display);
-												checkIfDied(enemyList, choiceTarget, display);
+												this->castOffensiveSpell(this->getSpellList()[choiceSpell-1], *enemyList[i]);
+												checkIfDied(enemyList, choiceTarget);
 											}
 										}
 									}
@@ -486,7 +429,7 @@ void PlayerCharacter:: playerTurn(vector <PlayerCharacter *> &playerList, vector
 									else if (this->getSpellList()[choiceSpell-1].getType()==3 || this->getSpellList()[choiceSpell-1].getType()==5){
 										for (int i=0; i<playerList.size();i++){
 											if (playerList[i]->isAlive()==true){
-												this->castHealingSpell(this->getSpellList()[choiceSpell-1], *playerList[i], display);
+												this->castHealingSpell(this->getSpellList()[choiceSpell-1], *playerList[i]);
 											}
 										}
 									}
@@ -503,13 +446,13 @@ void PlayerCharacter:: playerTurn(vector <PlayerCharacter *> &playerList, vector
 							//Enemy
 							if (this->getSpellList()[choiceSpell-1].getType()==0 || this->getSpellList()[choiceSpell-1].getType()==6 ){
 
-								choiceTarget=selectTargetPlayer(enemyList, display);
+								choiceTarget=selectTargetPlayer(enemyList);
 							}
 
 							//Ally
 							else if (this->getSpellList()[choiceSpell-1].getType()==2 || this->getSpellList()[choiceSpell-1].getType()==4 ){
 
-								choiceTarget=selectTargetPlayer(playerList, display);
+								choiceTarget=selectTargetPlayer(playerList);
 							}
 
 							else {
@@ -525,14 +468,14 @@ void PlayerCharacter:: playerTurn(vector <PlayerCharacter *> &playerList, vector
 								if (this->getSpellList()[choiceSpell-1].getType()==0 || this->getSpellList()[choiceSpell-1].getType()==6 ){
 
 
-									this->castOffensiveSpell(this->getSpellList()[choiceSpell-1], *enemyList[choiceTarget-1], display);
-									checkIfDied(enemyList, choiceTarget, display);
+									this->castOffensiveSpell(this->getSpellList()[choiceSpell-1], *enemyList[choiceTarget-1]);
+									checkIfDied(enemyList, choiceTarget);
 
 								}
 
 								else if (this->getSpellList()[choiceSpell-1].getType()==2 || this->getSpellList()[choiceSpell-1].getType()==4 ){
 
-									this->castHealingSpell(this->getSpellList()[choiceSpell-1], *playerList[choiceTarget-1], display);
+									this->castHealingSpell(this->getSpellList()[choiceSpell-1], *playerList[choiceTarget-1]);
 
 								}
 

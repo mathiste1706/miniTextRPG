@@ -28,12 +28,12 @@ public:
 	~PlayerCharacter();
 
 
-	void setExp(int const newExp);
-	void setTrainedCon(int const newTrainedCon);
-	void setTrainedMg(int const newTrainedMg);
-	void setTrainedAtk(int const newTrainedAtk);
-	void setTrainedDef(int const newTrainedDef);
-	void setTrainedAg(int const newTrainedAg);
+	void setExp(int newExp);
+	void setTrainedCon(int newTrainedCon);
+	void setTrainedMg(int newTrainedMg);
+	void setTrainedAtk(int newTrainedAtk);
+	void setTrainedDef(int newTrainedDef);
+	void setTrainedAg(int newTrainedAg);
 
 	int getExp() const;
 	int getTrainedCon() const;
@@ -43,15 +43,13 @@ public:
 	int getTrainedAg() const;
 
 
-	void showStats() const;
 	void levelUp();
-	void attributePoints(std::vector <PlayerCharacter> &playerList, int gold);
-	int selectTargetPlayer(int type);
+	void attributePoints(const std::vector <PlayerCharacter *> &playerList, int gold) const;
 
-	void checkIfDied(std::vector <EnemyCharacter *> &targetList, int choiceTarget, Display display);
-	int selectTargetPlayer(std::vector <PlayerCharacter *> &targetList, Display display);
-	int selectTargetPlayer(std::vector <EnemyCharacter *> &targetList, Display display);
-	void playerTurn(std::vector <PlayerCharacter *> &playerList, std::vector <EnemyCharacter *> &enemyList, Display display);
+	static void checkIfDied(const std::vector <EnemyCharacter *> &targetList, int choiceTarget);
+	static int selectTargetPlayer(std::vector <PlayerCharacter *> &targetList);
+	static int selectTargetPlayer(std::vector <EnemyCharacter *> &targetList);
+	void playerTurn(std::vector <PlayerCharacter *> &playerList, std::vector <EnemyCharacter *> &enemyList);
 
 };
 

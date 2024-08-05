@@ -4,6 +4,7 @@
 
 using namespace std;
 
+Loot:: Loot(): _dropChance(0), _drop(Armor("0",0)){}
 Loot:: Loot(int dropChance, Equipment drop): _dropChance(dropChance), _drop(drop){}
 Loot:: ~Loot(){}
 
@@ -13,11 +14,11 @@ EnemyCharacter::EnemyCharacter():  Character(), _rewardGold(0), _rewardExp(0){}
 
 EnemyCharacter::EnemyCharacter(string name): Character(name),  _rewardGold(0), _rewardExp(0) {}
 
-EnemyCharacter::EnemyCharacter(string name, int Lvl, int Con, int Mg, int Atk, int Def, int Ag, Weapon Weapon, Armor Armor, int gold, int exp, vector <Loot> &lootList): Character(name, Lvl, Con, Mg, Atk, Def, Ag, Weapon, Armor), _rewardGold(gold), _rewardExp(exp), _lootList(lootList) {}
+EnemyCharacter::EnemyCharacter(string name, int Lvl, int Con, int Mg, int Atk, int Def, int Ag, const Weapon& Weapon, const Armor& Armor, const int gold, const int exp, const vector <Loot> &lootList): Character(name, Lvl, Con, Mg, Atk, Def, Ag, Weapon, Armor), _rewardGold(gold), _rewardExp(exp), _lootList(lootList) {}
 
 EnemyCharacter::~EnemyCharacter(){}
 
-void EnemyCharacter:: giveRewards(vector <EnemyCharacter *> &enemyList, vector <PlayerCharacter *> &playerList, Inventory &inventory, Display &display){
+void EnemyCharacter:: giveRewards(const vector <EnemyCharacter *> &enemyList, const vector <PlayerCharacter *> &playerList, Inventory &inventory){
 
 	int totalExp=0;
 	int totalGold=0;
@@ -38,10 +39,10 @@ void EnemyCharacter:: giveRewards(vector <EnemyCharacter *> &enemyList, vector <
 				if (dropChance>=1){
 					inventory.addLoot(enemyList[j]->getLootList()[i].getDrop());
 					if ((enemyList[j]->getLootList()[i].getDrop()).type()){
-						display.showArmor(Armor(enemyList[j]->getLootList()[i].getDrop()));
+						Display:: showArmor(Armor(enemyList[j]->getLootList()[i].getDrop()));
 					}
 					else {
-						display.showWeapon(Weapon(enemyList[j]->getLootList()[i].getDrop()));
+						Display:: showWeapon(Weapon(enemyList[j]->getLootList()[i].getDrop()));
 					}
 			}
 		}
@@ -74,19 +75,19 @@ Spell EnemyCharacter:: mostPowerfullSpell(EnemyCharacter * &enemy, int spellType
 
 
 // Driver function to sort the vector elements by power of spell element of triplet struct in desc order
-bool EnemyCharacter:: sortAction(Triplet &a, Triplet &b){
+bool sortAction(Triplet &a, Triplet &b){
 
     return (a.spell.getPower() > b.spell.getPower());
 }
 
 // Driver function to sort the vector elements by active element of triplet struct in asc order
-bool EnemyCharacter:: sortActive(Triplet &a, Triplet &b){
+bool  sortActive(Triplet &a, Triplet &b){
 
     return (a.active < b.active);
 }
 
 
-void EnemyCharacter:: checkIfDied(vector <PlayerCharacter *> &targetList, int choiceTarget, int &nbPlayer, Display &display) {
+void EnemyCharacter:: checkIfDied(const vector <PlayerCharacter *> &targetList, const int choiceTarget, int &nbPlayer) {
 
 	if (targetList[choiceTarget]->isAlive()==false){
 		cout << targetList[choiceTarget]->getName() << " has died!\n";
@@ -94,7 +95,7 @@ void EnemyCharacter:: checkIfDied(vector <PlayerCharacter *> &targetList, int ch
 	}
 }
 
-void EnemyCharacter:: enemyTurn(std:: vector <EnemyCharacter *> &enemyList, std:: vector <PlayerCharacter *> &playerList, Display &display){
+void EnemyCharacter:: enemyTurn(vector <EnemyCharacter *> &enemyList, const vector <PlayerCharacter *> &playerList){
 
 // Select action
 
@@ -120,9 +121,6 @@ void EnemyCharacter:: enemyTurn(std:: vector <EnemyCharacter *> &enemyList, std:
 
 		}
 	}
-
-
-
 
 
 	for (int i=0; i<action.size(); i++){
@@ -156,15 +154,16 @@ void EnemyCharacter:: enemyTurn(std:: vector <EnemyCharacter *> &enemyList, std:
 
 					if (action[i].spell.getPower()!=0){
 						nbHealAllowed=1;
-						healAllFound=1;
+						healAllFound=true;
 					}
 
 				}
 
-				else {
 
-					action[i].spell=mostPowerfullSpell(action[i].active, 2);
-				}
+			else {
+
+				action[i].spell=mostPowerfullSpell(action[i].active, 2);
+			}
 		}
 
 
@@ -246,23 +245,23 @@ void EnemyCharacter:: enemyTurn(std:: vector <EnemyCharacter *> &enemyList, std:
 
 			case 0:
 				action[i].active->diminishMP(action[i].spell.getMPCost());
-				action[i].active->castOffensiveSpell(action[i].spell, *playerList[action[i].target], display);
-				checkIfDied(playerList, action[i].target, nbPlayer, display);
+				action[i].active->castOffensiveSpell(action[i].spell, *playerList[action[i].target]);
+				checkIfDied(playerList, action[i].target, nbPlayer);
 			break;
 
 			case 1:
 				action[i].active->diminishMP(action[i].spell.getMPCost());
 				for (int j=0; j<playerList.size();j++){
 					if (playerList[j]->isAlive()==true){
-						action[i].active->castOffensiveSpell(action[i].spell, *playerList[j], display);
-						checkIfDied(playerList, j, nbPlayer, display);
+						action[i].active->castOffensiveSpell(action[i].spell, *playerList[j]);
+						checkIfDied(playerList, j, nbPlayer);
 						}
 				}
 			break;
 
 			case 2:
 				action[i].active->diminishMP(action[i].spell.getMPCost());
-				action[i].active->castHealingSpell(action[i].spell, *enemyList[action[i].target], display);
+				action[i].active->castHealingSpell(action[i].spell, *enemyList[action[i].target]);
 				needHealing.erase(needHealing.begin()+action[i].target);
 			break;
 
@@ -270,15 +269,15 @@ void EnemyCharacter:: enemyTurn(std:: vector <EnemyCharacter *> &enemyList, std:
 				action[i].active->diminishMP(action[i].spell.getMPCost());
 				for (int j=0; j<enemyList.size();j++){
 					if (enemyList[j]->isAlive()==true){
-						action[i].active->castHealingSpell(action[i].spell, *enemyList[j], display);
+						action[i].active->castHealingSpell(action[i].spell, *enemyList[j]);
 					}
 					needHealing.clear();
 				}
 				break;
 
 			case -1:
-				action[i].active->attack(*playerList[action[i].target], display);
-				checkIfDied(playerList, action[i].target, nbPlayer, display);
+				action[i].active->attack(*playerList[action[i].target]);
+				checkIfDied(playerList, action[i].target, nbPlayer);
 
 				break;
 

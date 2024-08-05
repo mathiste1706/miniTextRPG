@@ -13,6 +13,9 @@
 #include "Random.hpp"
 #include "Display.hpp"
 
+class EnemyCharacter;
+class PlayerCharacter;
+
 class Character{
 
 protected:
@@ -43,7 +46,11 @@ public:
 
 	Character(std :: string name);
 
-	Character(std :: string name, int Lvl, int Con, int Mg, int Atk, int Def, int Ag, Weapon Weapon, Armor Armor);
+	Character(std :: string name, int Lvl, int Con, int Mg, int Atk, int Def, int Ag, const Weapon& Weapon, const Armor& Armor);
+
+	Character(const PlayerCharacter * pPlayerChara);
+
+	Character(const EnemyCharacter * pEnemyChara);
 
 
 	// Destroyer
@@ -148,18 +155,18 @@ public:
 
 	// Specific Methods
 
-	void diminishHP(int const damage, Display &display);
+	void diminishHP(int const damage);
 	void diminishMP(int const MPCost);
-	void attack(Character &target, Display &display) const;
+	void attack(Character &target) const;
 	void replendishHPAndMP();
 	bool isAlive() const;
 	void LvlUp();
 	void fillSpellListCharCreation();
 	void fillSpellListLvlUp(int releventLvl);
-	void castOffensiveSpell(Spell &spell, Character &target, Display &display);
-	void castHealingSpell(Spell &spell, Character &target, Display &display);
-	void castBuffingSpell(Spell &spell, Character &target, Display &display);
-	void castDebuffingSpell(Spell &spell, Character &target, Display &display);
+	void castOffensiveSpell(Spell &spell, Character &target) const;
+	void castHealingSpell(Spell &spell, Character &target);
+	void castBuffingSpell(Spell &spell, Character &target);
+	void castDebuffingSpell(Spell &spell, Character &target);
 
 
 

@@ -21,15 +21,15 @@ bool enemiesAreAlive=true;
 		for (int i=0; i<playerList.size() ;i++){
 			if (playerList[i]->isAlive()==true){
 
-				display.showStatusAll(playerList);
+				Display:: showStatusAll(playerList);
 				cout<<endl;
 
 
-				display.showStatusAll(enemyList);
+				Display:: showStatusAll(enemyList);
 
 
 
-				playerList[i]->playerTurn(playerList, enemyList, display);
+				playerList[i]->playerTurn(playerList, enemyList);
 			}
 
 		}
@@ -43,7 +43,7 @@ bool enemiesAreAlive=true;
 			}
 	}
 
-		enemyList[0]->enemyTurn(enemyList, playerList, display);
+		EnemyCharacter::enemyTurn(enemyList, playerList);
 
 
 
@@ -62,7 +62,7 @@ bool enemiesAreAlive=true;
 	}
 	if (partyIsAlive==true){
 			cout << "\nEnemies defeated! You Won !\n";
-			enemyList[0]->giveRewards(enemyList, playerList, inventory, display);
+			EnemyCharacter:: giveRewards(enemyList, playerList, inventory);
 		}
 	else if (enemiesAreAlive==true){
 			cout << "\nYou Have Perished!\nGAME OVER...\n";

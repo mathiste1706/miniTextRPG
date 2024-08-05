@@ -6,7 +6,7 @@ class Armor: public Equipment
 {
 	public:
 		Armor(std::string name, int attribute);
-		Armor(Equipment equipment);
+		Armor(const Equipment& equipment);
 		~Armor();
 
 	bool type() const{

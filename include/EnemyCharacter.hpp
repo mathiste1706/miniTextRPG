@@ -41,15 +41,18 @@ class Triplet {
 
 };
 
+bool sortAction(Triplet &a, Triplet &b);
+bool sortActive(Triplet &a, Triplet &b);
 
+class PlayerCharacter;
 class EnemyCharacter : public Character{
 
 	public:
 
 		EnemyCharacter();
 		EnemyCharacter(std::string name);
-		EnemyCharacter(std::string name, int Lvl, int Con, int Mg, int Atk, int Def, int Ag, Weapon Weapon,
-						Armor Armor, int gold, int exp, std::vector <Loot> &lootList);
+		EnemyCharacter(std::string name, int Lvl, int Con, int Mg, int Atk, int Def, int Ag, const Weapon& Weapon,
+						const Armor& Armor, int gold, int exp, const std::vector <Loot> &lootList);
 		~EnemyCharacter();
 
 		int getRewardGold() const { return _rewardGold; }
@@ -61,13 +64,11 @@ class EnemyCharacter : public Character{
 
 		//Specific methods
 
-		void giveRewards(std:: vector <EnemyCharacter *> &enemyList, std:: vector <PlayerCharacter *> &playerList, Inventory &inventory, Display &display);
+		static void giveRewards(const std:: vector <EnemyCharacter *> &enemyList, const std:: vector <PlayerCharacter *> &playerList, Inventory &inventory);
 
-		Spell mostPowerfullSpell(EnemyCharacter * &enemy, int spellType);
-		bool sortAction(Triplet &a, Triplet &b);
-		bool sortActive(Triplet &a, Triplet &b);
-		void checkIfDied(std::vector <PlayerCharacter *> &targetList, int choiceTarget, int &nbPlayer, Display &display);
-		void enemyTurn (std:: vector <EnemyCharacter *> &enemyList, std:: vector <PlayerCharacter *> &playerList, Display &display);
+		static Spell mostPowerfullSpell(EnemyCharacter * &enemy, int spellType);
+		static void checkIfDied(const std::vector <PlayerCharacter *> &targetList, int choiceTarget, int &nbPlayer);
+		static void enemyTurn (std:: vector <EnemyCharacter *> &enemyList, const std:: vector <PlayerCharacter *> &playerList);
 
 
 
