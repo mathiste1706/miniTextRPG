@@ -55,9 +55,7 @@ bool enemiesAreAlive=true;
 	else if (enemiesAreAlive==true){
 
 		}
-
 }
-
 
 int main(){
 
