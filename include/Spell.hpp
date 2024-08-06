@@ -2,7 +2,6 @@
 #define SPELL_HPP_INCLUDED
 
 #include <iostream>
-#include <vector>
 
 class Spell{
 
@@ -44,7 +43,7 @@ public:
 
 	// Destroyer
 
-	virtual ~Spell();
+	 ~Spell();
 
 	// Getter, Setter
 
@@ -86,7 +85,6 @@ public:
 	int getType() const{
 
 		return _type;
-		return _type;
 	}
 
 	int getPower() const{
@@ -108,10 +106,6 @@ public:
 	_turnDuration=newTurnDuration;}
 	void setAffectedStat(int const newAffectedStat){
 	_affectedStat=newAffectedStat;}
-
-	// Specific Methods
-	void showAtrributes() const;
-
 };
 
 

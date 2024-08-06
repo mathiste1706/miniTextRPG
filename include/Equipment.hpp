@@ -18,7 +18,7 @@ public:
 	// Destroyer
 
 	// To force the class to be abstract
-	virtual ~Equipment();
+	 virtual ~Equipment()=default;
 
 	// Getter, Setter
 	void setName(std :: string newName);
@@ -26,11 +26,6 @@ public:
 
 	std :: string getName() const;
 	int getAttribute() const;
-
-	virtual bool type() const;
-
-
-
 };
 
 

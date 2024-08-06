@@ -2,6 +2,7 @@
 #define ENEMYCHARACTER_HPP
 
 #include <algorithm>
+#include <memory>
 
 #include "Character.hpp"
 #include "Equipment.hpp"
@@ -14,18 +15,18 @@ class Loot{
 private:
 
 	int _dropChance;
-	Equipment _drop;
+	std::shared_ptr<Equipment> _drop;
 
 public:
 
 	Loot();
-	Loot(int dropChance, Equipment drop);
+	Loot(int dropChance, const std::shared_ptr<Equipment>& drop);
 	~Loot();
 
 	int getDropChance() const { return _dropChance; }
 	void setDropChance(int newDropChance) { _dropChance = newDropChance; }
-	Equipment getDrop() const { return _drop; }
-	void setDrop(Equipment newDrop) { _drop = newDrop; }
+	std::shared_ptr<Equipment> getDrop() const { return _drop; }
+	void setDrop(const std::shared_ptr<Equipment>& newDrop) { _drop = newDrop; }
 
 
 };

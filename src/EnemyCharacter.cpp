@@ -4,8 +4,8 @@
 
 using namespace std;
 
-Loot:: Loot(): _dropChance(0), _drop(Armor("0",0)){}
-Loot:: Loot(int dropChance, Equipment drop): _dropChance(dropChance), _drop(drop){}
+Loot:: Loot(): _dropChance(0), _drop(make_shared<Armor>(Armor("0",0))){}
+Loot:: Loot(const int dropChance, const shared_ptr<Equipment>& drop): _dropChance(dropChance), _drop(drop){}
 Loot:: ~Loot(){}
 
 Triplet::Triplet(EnemyCharacter * arg_active): active(arg_active){}
@@ -28,28 +28,32 @@ void EnemyCharacter:: giveRewards(const vector <EnemyCharacter *> &enemyList, co
 		totalExp+=enemyList[j]->getRewardExp();
 		totalGold+=+enemyList[j]->getRewardGold();
 
-		for (int i=0; i<playerList.size(); i++){
-			playerList[i]->setExp(playerList[i]->getExp()+enemyList[j]->getRewardExp());
-		}
-
-		inventory.setGold(inventory.getGold()+enemyList[j]->getRewardGold());
-
 		for (int i=0; i<enemyList[j]->getLootList().size();i++){
 			int dropChance= randomNumberMultiply(0,1)*(enemyList[j]->getLootList()[i].getDropChance());
 				if (dropChance>=1){
-					inventory.addLoot(enemyList[j]->getLootList()[i].getDrop());
-					if ((enemyList[j]->getLootList()[i].getDrop()).type()){
-						Display:: showArmor(Armor(enemyList[j]->getLootList()[i].getDrop()));
+					inventory.addLoot(*(enemyList[j]->getLootList()[i].getDrop()));
+					if (shared_ptr<Weapon> WeaponPtr=dynamic_pointer_cast<Weapon>(enemyList[j]->getLootList()[i].getDrop())){
+						Display:: showWeapon(*WeaponPtr);
+					}
+
+
+					else if (shared_ptr<Armor> ArmorPtr=dynamic_pointer_cast<Armor>(enemyList[j]->getLootList()[i].getDrop())){
+						Display:: showArmor(*ArmorPtr);
 					}
 					else {
-						Display:: showWeapon(Weapon(enemyList[j]->getLootList()[i].getDrop()));
+						cout<< "Error in giveReward Equipment is neither a Armor or a Weapon\n";
 					}
 			}
 		}
 	}
 
-	cout<< "You gained " << totalExp << " Exp!\n";
-	cout<< "You gained " << totalGold << " Gold!\n";
+	for (int i=0; i<playerList.size(); i++){
+		playerList[i]->setExp(playerList[i]->getExp()+totalExp);
+	}
+
+	inventory.setGold(inventory.getGold()+totalGold);
+	Display::rewardExp(totalExp);
+	Display::rewardGold(totalGold);
 }
 
 
@@ -90,7 +94,7 @@ bool  sortActive(Triplet &a, Triplet &b){
 void EnemyCharacter:: checkIfDied(const vector <PlayerCharacter *> &targetList, const int choiceTarget, int &nbPlayer) {
 
 	if (targetList[choiceTarget]->isAlive()==false){
-		cout << targetList[choiceTarget]->getName() << " has died!\n";
+		Display:: checkIfDied(targetList[choiceTarget]);
 		nbPlayer--;
 	}
 }
@@ -100,7 +104,7 @@ void EnemyCharacter:: enemyTurn(vector <EnemyCharacter *> &enemyList, const vect
 // Select action
 
 	vector <pair<int, int>> needHealing;
-	//vector <EnemyCharacter*> subList;
+
 	int nbHealAllowed=0;
 	bool healAllFound=0; // was never found for any enemy in the list
 	int nbPlayer=0;
@@ -239,7 +243,6 @@ void EnemyCharacter:: enemyTurn(vector <EnemyCharacter *> &enemyList, const vect
 	cout.flush();
 
 	for (int i=0; i<action.size();i++){
-			cout<<endl;
 
 		switch(action[i].spell.getType()){
 
@@ -286,6 +289,7 @@ void EnemyCharacter:: enemyTurn(vector <EnemyCharacter *> &enemyList, const vect
 				break;
 
 		}
+		Display::pressEnter();
 
 	}
 }

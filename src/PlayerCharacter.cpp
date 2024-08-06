@@ -266,11 +266,37 @@ void PlayerCharacter:: checkIfDied(const vector <EnemyCharacter *> &targetList, 
 
 }
 
-int PlayerCharacter:: selectTargetPlayer(vector <PlayerCharacter *> &targetList){
+int PlayerCharacter::selectTargetPlayer(const int spellType){
+	int choiceTarget=-1;
+	Display:: selectTarget();
 
+	do {
+
+		if (spellType==1 or spellType==7) {
+			Display:: selectAllEnemies();
+			cin >>choiceTarget;
+		}
+
+		else if (spellType==3 or spellType==5) {
+			Display::selectAllAllies();
+			cin >>choiceTarget;
+
+		}
+		else {
+			cout << "Something went wrong in playerTurn when select all";
+		}
+
+	}while(choiceTarget!=1 and choiceTarget!=0);
+
+	return choiceTarget;
+}
+
+
+int PlayerCharacter:: selectTargetPlayer( vector <PlayerCharacter *> &targetList){
 
 	int choiceTarget=0;
 	int nbTarget;
+	vector<PlayerCharacter*> subList;
 
 	do {
 
@@ -280,11 +306,23 @@ int PlayerCharacter:: selectTargetPlayer(vector <PlayerCharacter *> &targetList)
 
 		cin>> choiceTarget;
 
+		for (int i=0; i<targetList.size(); i++) {
+			if (targetList[i]->isAlive()){
+				subList.push_back(targetList[i]);
+			}
+		}
+
 		if (choiceTarget<0 || choiceTarget>nbTarget) {
 			Display:: wrongInput();
 		}
 
+
 	} while (choiceTarget<0 || choiceTarget>nbTarget);
+
+	if (choiceTarget!=0){
+		vector<PlayerCharacter*>::iterator target=find(targetList.begin(), targetList.end(), subList[choiceTarget-1]);
+		choiceTarget=target-targetList.begin()+1;
+	}
 
 	return choiceTarget;
 
@@ -295,6 +333,7 @@ int PlayerCharacter:: selectTargetPlayer(vector <EnemyCharacter *> &targetList){
 
 	int choiceTarget=0;
 	int nbTarget;
+	vector<EnemyCharacter*> subList;
 
 	do {
 
@@ -304,15 +343,28 @@ int PlayerCharacter:: selectTargetPlayer(vector <EnemyCharacter *> &targetList){
 
 		cin>> choiceTarget;
 
+		for (int i=0; i<targetList.size(); i++) {
+			if (targetList[i]->isAlive()){
+				subList.push_back(targetList[i]);
+			}
+		}
+
 		if (choiceTarget<0 || choiceTarget>nbTarget) {
 			Display:: wrongInput();
 		}
 
-	} while (choiceTarget<0 || choiceTarget>nbTarget);
+	} while (choiceTarget<0 or choiceTarget>nbTarget);
+
+	if (choiceTarget!=0){
+		vector<EnemyCharacter*>::iterator target=find(targetList.begin(), targetList.end(), subList[choiceTarget-1]);
+		choiceTarget=target-targetList.begin()+1;
+	}
 
 	return choiceTarget;
 
 }
+
+
 
 
 void PlayerCharacter:: playerTurn(vector <PlayerCharacter *> &playerList, vector <EnemyCharacter *> &enemyList){
@@ -387,26 +439,9 @@ void PlayerCharacter:: playerTurn(vector <PlayerCharacter *> &playerList, vector
 
 
 						// Target All
-						if ((this->getSpellList()[choiceSpell-1].getType())%2!=0){
-							Display:: selectTarget();
-
-							do {
-
-								if (this->getSpellList()[choiceSpell-1].getType()==1 or this->getSpellList()[choiceSpell-1].getType()==7) {
-									Display:: selectAllEnemies();
-									cin >>choiceTarget;
-								}
-
-								else if (this->getSpellList()[choiceSpell-1].getType()==3 or this->getSpellList()[choiceSpell-1].getType()==5) {
-									Display::selectAllAllies();
-									cin >>choiceTarget;
-
-								}
-								else {
-									cout << "Something went wrong in when select all";
-								}
-
-							}while(choiceTarget!=1);
+						if ((this->getSpellList()[choiceSpell-1].getType())%2!=0) {
+							choiceTarget=selectTargetPlayer(this->getSpellList()[choiceSpell-1].getType());
+						}
 
 
 								if (choiceTarget==1){
@@ -439,7 +474,7 @@ void PlayerCharacter:: playerTurn(vector <PlayerCharacter *> &playerList, vector
 									}
 
 								}
-						}
+
 
 						//Target Single
 						else {
@@ -485,17 +520,15 @@ void PlayerCharacter:: playerTurn(vector <PlayerCharacter *> &playerList, vector
 
 							}
 						}
-
 					}
 
 				}while(choiceSpell!=0 && finishedTurn==0);
 
 				break;
 			}
-
-
-
+		if (finishedTurn) {
+			Display::pressEnterPlayer();
 		}
-
+	}
 }
 

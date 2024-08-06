@@ -8,12 +8,7 @@ class Weapon : public Equipment
 {
 	public:
 		Weapon(std::string name, int attribute);
-		Weapon(Equipment equipment);
-		~Weapon();
-
-	bool type() const{
-	return 1;
-	}
+		~Weapon() override;
 };
 
 #endif // WEAPON_HPP

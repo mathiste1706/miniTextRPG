@@ -47,8 +47,9 @@ public:
 	void attributePoints(const std::vector <PlayerCharacter *> &playerList, int gold) const;
 
 	static void checkIfDied(const std::vector <EnemyCharacter *> &targetList, int choiceTarget);
-	static int selectTargetPlayer(std::vector <PlayerCharacter *> &targetList);
-	static int selectTargetPlayer(std::vector <EnemyCharacter *> &targetList);
+	static int selectTargetPlayer(int spellType);
+	static int selectTargetPlayer( std::vector <PlayerCharacter *> &targetList);
+	static int selectTargetPlayer( std::vector <EnemyCharacter *> &targetList);
 	void playerTurn(std::vector <PlayerCharacter *> &playerList, std::vector <EnemyCharacter *> &enemyList);
 
 };

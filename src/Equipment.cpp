@@ -4,10 +4,6 @@
 Equipment:: Equipment(std :: string name, int attribute): _name(name), _attribute(attribute){}
 
 
-// Destroyer
-
-Equipment:: ~Equipment(){}
-
 // Getter, Setter
 
 

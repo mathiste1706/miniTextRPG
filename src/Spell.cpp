@@ -10,10 +10,3 @@ Spell:: Spell(std :: string name, std :: string desc, int type, int power, int M
 // Destroyer
 
 Spell:: ~Spell(){}
-
-// Specific Methods
-void Spell:: showAtrributes() const{
-
-	std :: cout << _name << "\t" << _desc << "\t" << _MPCost << " MP \n";
-
-}

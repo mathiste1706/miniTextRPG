@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="miniTextRPG"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/mathilde/Bureau/miniTextRPG/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/mathilde/Bureau/miniTextRPG/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/mathilde/Bureau/miniTextRPG/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/mathilde/Bureau/miniTextRPG/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/mathilde/Bureau/miniTextRPG/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="miniTextRPG">
+				<Option output="/home/mathilde/Bureau/miniTextRPG/cmake-build-debug/miniTextRPG" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/mathilde/Bureau/miniTextRPG/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/mathilde/Bureau/miniTextRPG/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-unknown-linux-gnu/13.2.0/../../../../include/c++/13.2.0"/>
+					<Add directory="/usr/lib/gcc/x86_64-unknown-linux-gnu/13.2.0/../../../../include/c++/13.2.0/x86_64-unknown-linux-gnu"/>
+					<Add directory="/usr/lib/gcc/x86_64-unknown-linux-gnu/13.2.0/../../../../include/c++/13.2.0/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-unknown-linux-gnu/13.2.0/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-unknown-linux-gnu/13.2.0/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/mathilde/Bureau/miniTextRPG/cmake-build-debug/Makefile&quot;  VERBOSE=1 miniTextRPG"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/mathilde/Bureau/miniTextRPG/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/mathilde/Bureau/miniTextRPG/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/mathilde/Bureau/miniTextRPG/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="miniTextRPG/fast">
+				<Option output="/home/mathilde/Bureau/miniTextRPG/cmake-build-debug/miniTextRPG" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/mathilde/Bureau/miniTextRPG/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/mathilde/Bureau/miniTextRPG/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-unknown-linux-gnu/13.2.0/../../../../include/c++/13.2.0"/>
+					<Add directory="/usr/lib/gcc/x86_64-unknown-linux-gnu/13.2.0/../../../../include/c++/13.2.0/x86_64-unknown-linux-gnu"/>
+					<Add directory="/usr/lib/gcc/x86_64-unknown-linux-gnu/13.2.0/../../../../include/c++/13.2.0/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-unknown-linux-gnu/13.2.0/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-unknown-linux-gnu/13.2.0/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/mathilde/Bureau/miniTextRPG/cmake-build-debug/Makefile&quot;  VERBOSE=1 miniTextRPG/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/mathilde/Bureau/miniTextRPG/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/mathilde/Bureau/miniTextRPG/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/mathilde/Bureau/miniTextRPG/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/mathilde/Bureau/miniTextRPG/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/mathilde/Bureau/miniTextRPG/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/mathilde/Bureau/miniTextRPG/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/mathilde/Bureau/miniTextRPG/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/mathilde/Bureau/miniTextRPG/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/mathilde/Bureau/miniTextRPG/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/mathilde/Bureau/miniTextRPG/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/mathilde/Bureau/miniTextRPG/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/mathilde/Bureau/miniTextRPG/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/mathilde/Bureau/miniTextRPG/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/mathilde/Bureau/miniTextRPG/include/Armor.hpp">
+			<Option target="miniTextRPG"/>
+		</Unit>
+		<Unit filename="/home/mathilde/Bureau/miniTextRPG/include/Character.hpp">
+			<Option target="miniTextRPG"/>
+		</Unit>
+		<Unit filename="/home/mathilde/Bureau/miniTextRPG/include/Display.hpp">
+			<Option target="miniTextRPG"/>
+		</Unit>
+		<Unit filename="/home/mathilde/Bureau/miniTextRPG/include/EnemyCharacter.hpp">
+			<Option target="miniTextRPG"/>
+		</Unit>
+		<Unit filename="/home/mathilde/Bureau/miniTextRPG/include/Equipment.hpp">
+			<Option target="miniTextRPG"/>
+		</Unit>
+		<Unit filename="/home/mathilde/Bureau/miniTextRPG/include/Inventory.hpp">
+			<Option target="miniTextRPG"/>
+		</Unit>
+		<Unit filename="/home/mathilde/Bureau/miniTextRPG/include/PlayerCharacter.hpp">
+			<Option target="miniTextRPG"/>
+		</Unit>
+		<Unit filename="/home/mathilde/Bureau/miniTextRPG/include/Random.hpp">
+			<Option target="miniTextRPG"/>
+		</Unit>
+		<Unit filename="/home/mathilde/Bureau/miniTextRPG/include/Spell.hpp">
+			<Option target="miniTextRPG"/>
+		</Unit>
+		<Unit filename="/home/mathilde/Bureau/miniTextRPG/include/SpellDictionnary.hpp">
+			<Option target="miniTextRPG"/>
+		</Unit>
+		<Unit filename="/home/mathilde/Bureau/miniTextRPG/include/Weapon.hpp">
+			<Option target="miniTextRPG"/>
+		</Unit>
+		<Unit filename="/home/mathilde/Bureau/miniTextRPG/main.cpp">
+			<Option target="miniTextRPG"/>
+		</Unit>
+		<Unit filename="/home/mathilde/Bureau/miniTextRPG/src/Armor.cpp">
+			<Option target="miniTextRPG"/>
+		</Unit>
+		<Unit filename="/home/mathilde/Bureau/miniTextRPG/src/Character.cpp">
+			<Option target="miniTextRPG"/>
+		</Unit>
+		<Unit filename="/home/mathilde/Bureau/miniTextRPG/src/Display.cpp">
+			<Option target="miniTextRPG"/>
+		</Unit>
+		<Unit filename="/home/mathilde/Bureau/miniTextRPG/src/EnemyCharacter.cpp">
+			<Option target="miniTextRPG"/>
+		</Unit>
+		<Unit filename="/home/mathilde/Bureau/miniTextRPG/src/Equipment.cpp">
+			<Option target="miniTextRPG"/>
+		</Unit>
+		<Unit filename="/home/mathilde/Bureau/miniTextRPG/src/Inventory.cpp">
+			<Option target="miniTextRPG"/>
+		</Unit>
+		<Unit filename="/home/mathilde/Bureau/miniTextRPG/src/PlayerCharacter.cpp">
+			<Option target="miniTextRPG"/>
+		</Unit>
+		<Unit filename="/home/mathilde/Bureau/miniTextRPG/src/Random.cpp">
+			<Option target="miniTextRPG"/>
+		</Unit>
+		<Unit filename="/home/mathilde/Bureau/miniTextRPG/src/Spell.cpp">
+			<Option target="miniTextRPG"/>
+		</Unit>
+		<Unit filename="/home/mathilde/Bureau/miniTextRPG/src/Weapon.cpp">
+			<Option target="miniTextRPG"/>
+		</Unit>
+		<Unit filename="/home/mathilde/Bureau/miniTextRPG/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

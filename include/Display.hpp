@@ -13,11 +13,12 @@ class PlayerCharacter;
 class Display
 {
 	public:
-		Display();
-		~Display();
 
 		static void wrongInput();
 		static void notEnoughGold();
+
+		static void showSpellAttributes(const Spell &spell);
+
 		static void showPlayerListAll(const std::vector<PlayerCharacter *>& playerList);
 		static int showPlayerListAlive(const std::vector<PlayerCharacter *>& playerList);
 		static int showPlayerListDead(const std::vector<PlayerCharacter *>& playerList);
@@ -26,6 +27,7 @@ class Display
 		static void showStatus(const Character* character);
 		static void showStatusAll(const std::vector<PlayerCharacter*> &playerList) ;
 		static void showStatusAll(const std::vector<EnemyCharacter*> &enemyList) ;
+		static void showStatusAll(const std::vector<PlayerCharacter*> &playerList, const std::vector<EnemyCharacter*> &enemyList);
 
 		static void attack(const Character &attacker, const Character  &target) ;
 		static void diminishHP(int damage) ;
@@ -52,7 +54,16 @@ class Display
 		static  void notEnoughMana();
 		static void selectAllEnemies();
 		static void selectAllAllies();
+		static void pressEnter();
+		static void pressEnterPlayer();
 
+		static void rewardExp(int exp);
+		static void rewardGold(int gold);
+
+		static void nextTurn();
+
+		static void win();
+		static void lose();
 };
 
 #endif // DISPLAY_HPP

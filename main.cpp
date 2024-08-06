@@ -5,40 +5,31 @@
 
 using namespace std;
 
-void combat(vector <PlayerCharacter *> &playerList, vector <EnemyCharacter *> &enemyList, Inventory &inventory, Display &display){
+void combat(vector <PlayerCharacter *> &playerList, vector <EnemyCharacter *> &enemyList, Inventory &inventory){
 
 bool partyIsAlive=true;
 bool enemiesAreAlive=true;
-
 
 	while(partyIsAlive==true && enemiesAreAlive==true){
 
 		partyIsAlive=false;
 		enemiesAreAlive=false;
 
-
 		// show status at every player turn
 		for (int i=0; i<playerList.size() ;i++){
 			if (playerList[i]->isAlive()==true){
 
-				Display:: showStatusAll(playerList);
-				cout<<endl;
-
-
-				Display:: showStatusAll(enemyList);
-
-
+				Display::showStatusAll(playerList, enemyList);
 
 				playerList[i]->playerTurn(playerList, enemyList);
 			}
-
 		}
 
 
 		for (int i=0; i<enemyList.size(); i++){		// all enemies are dead
 
 			if (enemyList[i]->isAlive()== true){
-				enemiesAreAlive=1;
+				enemiesAreAlive=true;
 				break;
 			}
 	}
@@ -50,22 +41,19 @@ bool enemiesAreAlive=true;
 		for (int i=0; i<playerList.size(); i++){		// all party is dead
 
 			if (playerList[i]->isAlive()== true){
-				partyIsAlive=1;
+				partyIsAlive=true;
 				break;
 			}
 	}
-
-
-
-		cout<< endl;
+		Display::nextTurn();
 
 	}
 	if (partyIsAlive==true){
-			cout << "\nEnemies defeated! You Won !\n";
+			Display::win();
 			EnemyCharacter:: giveRewards(enemyList, playerList, inventory);
 		}
 	else if (enemiesAreAlive==true){
-			cout << "\nYou Have Perished!\nGAME OVER...\n";
+
 		}
 
 }
@@ -74,10 +62,8 @@ bool enemiesAreAlive=true;
 int main(){
 
 	Inventory inventory;
-	Display display;
 
-
-	PlayerCharacter player("player");
+	PlayerCharacter player("player", 2, 6, 6, 10, 6, 100, Weapon("r", 1), Armor("ff", 1), 0);
 	player.fillSpellListCharCreation();
 	PlayerCharacter player2("player2");
 	player2.fillSpellListCharCreation();
@@ -85,8 +71,9 @@ int main(){
 	player3.fillSpellListCharCreation();
 
 
+
 	vector <Loot> lootList1={Loot()};
-	vector <Loot> lootList2={Loot(100, Weapon("Excalibur", 100)), Loot(100, Armor("Shiniest Armor", 100))};
+	vector <Loot> lootList2={Loot(100, make_shared<Weapon>(Weapon("Excalibur", 100))), Loot(100, make_shared<Armor>(Armor("Shiniest Armor", 100)))};
 
 	EnemyCharacter  monster1("monster 1", 1, 2,3, 5,2,0, Weapon("Rusted sword", 1), Armor("Rusted armor", 1), 10, 25, lootList1);
 	EnemyCharacter  monster2("monster 2", 1, 2,3, 5,2,0, Weapon("Rusted sword", 1), Armor("Rusted armor", 1), 10, 25, lootList1);
@@ -110,7 +97,7 @@ int main(){
 	enemyList.push_back(&monster3);
 
 
-	combat(playerList, enemyList, inventory, display);
+	combat(playerList, enemyList, inventory);
 
 
 

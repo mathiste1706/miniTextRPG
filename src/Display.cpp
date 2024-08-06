@@ -1,15 +1,11 @@
+#include <limits>
 #include "Display.hpp"
 #include "Character.hpp"  // it's only in .cpp to avoid circular dependencies
 #include "PlayerCharacter.hpp" // it's only in .cpp to avoid circular dependencies
 #include "EnemyCharacter.hpp" // it's only in .cpp to avoid circular dependencies
 
-
-
-
 using namespace std;
 
-Display:: Display(){}
-Display:: ~Display(){}
 
 void Display::wrongInput() {
 	cout << "!Wrong input!" << endl;
@@ -19,9 +15,14 @@ void Display::notEnoughGold() {
 	cout << "You do not have enough gold!\n";
 }
 
+void Display::showSpellAttributes(const Spell &spell) {
+	cout << spell.getName() << "\t" << spell.getDesc() << "\t" << spell.getMPCost() << " MP \n";
+}
+
+
 void Display::showPlayerListAll(const vector<PlayerCharacter *>& playerList) {
 	for (int i=0; i<playerList.size(); i++){
-		cout << " > " << i+1 << " : " << playerList[i]->getName();
+		cout << " > " << i+1 << " : " << playerList[i]->getName() <<endl;
 	}
 }
 
@@ -29,7 +30,7 @@ int Display::showPlayerListAlive(const vector<PlayerCharacter *>& playerList) {
 	int nbPlayer=0;
 	for (int i=0; i<playerList.size(); i++) {
 		if (playerList[i]->isAlive()){
-			cout << " > " << i+1 << " : " << playerList[i]->getName();
+			cout << " > " << i+1 << " : " << playerList[i]->getName() <<endl;
 			nbPlayer++;
 		}
 	}
@@ -40,8 +41,8 @@ int Display::showPlayerListDead(const vector<PlayerCharacter *>& playerList) {
 	int nbPlayer=0;
 	for (int i=0; i<playerList.size(); i++) {
 		if (!playerList[i]->isAlive()){
-			cout << " > " << i+1 << " : " << playerList[i]->getName();
 			nbPlayer++;
+			cout << " > " << nbPlayer << " : " << playerList[i]->getName() << endl;
 		}
 	}
 	return nbPlayer;
@@ -50,9 +51,9 @@ int Display::showPlayerListDead(const vector<PlayerCharacter *>& playerList) {
 int Display::showEnemyList(const std::vector<EnemyCharacter *> &enemyList) {
 	int nbEnemy=0;
 	for (int i=0; i<enemyList.size(); i++) {
-		if (!enemyList[i]->isAlive()){
-			cout << " > " << i+1 << " : " << enemyList[i]->getName();
+		if (enemyList[i]->isAlive()){
 			nbEnemy++;
+			cout << " > " << nbEnemy << " : " << enemyList[i]->getName() << endl;
 		}
 	}
 	return nbEnemy;
@@ -82,6 +83,14 @@ void Display:: showStatusAll(const vector<EnemyCharacter*> &enemyList) {
 		}
 	}
 }
+
+void Display::showStatusAll(const std::vector<PlayerCharacter *> &playerList, const std::vector<EnemyCharacter *> &enemyList) {
+	showStatusAll(playerList);
+	cout<<endl;
+	showStatusAll(enemyList);
+
+}
+
 
 void Display:: attack(const Character &attacker, const Character  &target) {
 	cout<< attacker.getName()<< " attacks " << target.getName();
@@ -157,15 +166,15 @@ void Display::selectTarget() {
 	cout<< "(type 0 to go back) Select your target: \n";
 }
 void Display::selectAction() {
-	cout<< "\nWhat do you want to do ?\n > 1: Attack\n > 2: Magic\n" << endl;
+	cout<< "\nWhat do you want to do ?\n > 1: Attack\n > 2: Magic\n";
 }
 void Display::magicMenu(const PlayerCharacter &playerCharacter) {
 	cout<<"MAGIC:\n";
 
-	cout << "(type 0 to come back) What do you want to cast?\n";
+	cout << "(type 0 to go back) What do you want to cast?\n";
 	for (int i=0; i < (playerCharacter.getSpellList().size()); i++){
 		cout << " > " << i+1 << ": ";
-		playerCharacter.getSpellList()[i].showAtrributes();
+		showSpellAttributes(playerCharacter.getSpellList()[i]);
 	}
 }
 void Display::notEnoughMana() {
@@ -174,14 +183,46 @@ void Display::notEnoughMana() {
 
 void Display::selectAllEnemies() {
 
-	cout<< "All Enemies\n";
+	cout<< "> 1: All Enemies\n";
 
 }
 
 void Display::selectAllAllies() {
-	cout<< "All Allies\n";
-
+	cout<< "> 1: All Allies\n";
 }
+
+void Display::pressEnter() {
+	cout << "Press <ENTER> to continue: \n";
+
+	cin.ignore( std::numeric_limits<std::streamsize>::max(), '\n' );
+}
+
+void Display::pressEnterPlayer() {
+	cin.ignore();
+	pressEnter();
+}
+
+
+void Display::rewardExp(int exp) {
+	cout<< "You gained " << exp << " Exp!\n";
+}
+
+void Display::rewardGold(int gold) {
+	cout<< "You gained " << gold << " Gold!\n";
+}
+
+void Display::nextTurn() {
+	cout<< endl;
+}
+
+void Display::win() {
+	cout << "\nEnemies defeated! You Won !\n";
+}
+
+void Display::lose() {
+	cout << "\nYou Have Perished!\nGAME OVER...\n";
+}
+
 
 
 
