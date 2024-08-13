@@ -10,11 +10,17 @@
 class Character;
 class EnemyCharacter;
 class PlayerCharacter;
+
 class Display
 {
 	public:
 
-		static void wrongInput();
+		static void wrongInputType();
+		static void wrongInputBounds(const int lower, const int upper);
+		inline static void getErrorInFunction(const char* file, const char* func, int line){
+		 std::cout<< "!Wrong function call! The dev is a dimwit\n\tLOCATION " <<file<<" in " <<func <<" line " <<line<< std::endl;
+		}
+
 		static void notEnoughGold();
 
 		static void showSpellAttributes(const Spell &spell);
@@ -64,6 +70,9 @@ class Display
 
 		static void win();
 		static void lose();
+
+		#define errorInFunction() Display:: getErrorInFunction(__FILE__, __FUNCTION__, __LINE__)
 };
+
 
 #endif // DISPLAY_HPP

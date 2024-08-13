@@ -41,7 +41,7 @@ void EnemyCharacter:: giveRewards(const vector <EnemyCharacter *> &enemyList, co
 						Display:: showArmor(*ArmorPtr);
 					}
 					else {
-						cout<< "Error in giveReward Equipment is neither a Armor or a Weapon\n";
+						 Display:: errorInFunction();
 					}
 			}
 		}
@@ -285,7 +285,7 @@ void EnemyCharacter:: enemyTurn(vector <EnemyCharacter *> &enemyList, const vect
 				break;
 
 			default:
-				cout<< "!Wrong function call! The dev is a dimwit\n\tLOCATION enemyTurn (line 280)\n";
+				 Display:: errorInFunction();
 				break;
 
 		}

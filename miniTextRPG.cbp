@@ -38,6 +38,7 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="include/Action.hpp" />
 		<Unit filename="include/Armor.hpp" />
 		<Unit filename="include/Character.hpp" />
 		<Unit filename="include/Display.hpp" />
@@ -50,6 +51,7 @@
 		<Unit filename="include/SpellDictionnary.hpp" />
 		<Unit filename="include/Weapon.hpp" />
 		<Unit filename="main.cpp" />
+		<Unit filename="src/Action.cpp" />
 		<Unit filename="src/Armor.cpp" />
 		<Unit filename="src/Character.cpp" />
 		<Unit filename="src/Display.cpp" />

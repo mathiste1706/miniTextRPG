@@ -2,60 +2,10 @@
 #include "PlayerCharacter.hpp"
 #include "EnemyCharacter.hpp"
 #include "Display.hpp"
+#include "Action.hpp"
 
 using namespace std;
 
-void combat(vector <PlayerCharacter *> &playerList, vector <EnemyCharacter *> &enemyList, Inventory &inventory){
-
-bool partyIsAlive=true;
-bool enemiesAreAlive=true;
-
-	while(partyIsAlive==true && enemiesAreAlive==true){
-
-		partyIsAlive=false;
-		enemiesAreAlive=false;
-
-		// show status at every player turn
-		for (int i=0; i<playerList.size() ;i++){
-			if (playerList[i]->isAlive()==true){
-
-				Display::showStatusAll(playerList, enemyList);
-
-				playerList[i]->playerTurn(playerList, enemyList);
-			}
-		}
-
-
-		for (int i=0; i<enemyList.size(); i++){		// all enemies are dead
-
-			if (enemyList[i]->isAlive()== true){
-				enemiesAreAlive=true;
-				break;
-			}
-	}
-
-		EnemyCharacter::enemyTurn(enemyList, playerList);
-
-
-
-		for (int i=0; i<playerList.size(); i++){		// all party is dead
-
-			if (playerList[i]->isAlive()== true){
-				partyIsAlive=true;
-				break;
-			}
-	}
-		Display::nextTurn();
-
-	}
-	if (partyIsAlive==true){
-			Display::win();
-			EnemyCharacter:: giveRewards(enemyList, playerList, inventory);
-		}
-	else if (enemiesAreAlive==true){
-
-		}
-}
 
 int main(){
 
@@ -95,7 +45,7 @@ int main(){
 	enemyList.push_back(&monster3);
 
 
-	combat(playerList, enemyList, inventory);
+	Action:: combat(playerList, enemyList, inventory);
 
 
 

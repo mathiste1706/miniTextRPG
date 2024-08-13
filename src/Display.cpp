@@ -7,8 +7,12 @@
 using namespace std;
 
 
-void Display::wrongInput() {
-	cout << "!Wrong input!" << endl;
+void Display::wrongInputType() {
+	cout << "!Wrong input! Please enter a whole number!" << endl;
+}
+
+void Display::wrongInputBounds(int lower, int upper) {
+	cout << "!Wrong input! Please enter a number between " <<lower<< " and "<<upper << endl;
 }
 
 void Display::notEnoughGold() {

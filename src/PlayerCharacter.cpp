@@ -1,4 +1,5 @@
 #include "PlayerCharacter.hpp"
+#include "Action.hpp"
 
 using namespace std;
 
@@ -125,11 +126,9 @@ void PlayerCharacter:: attributePoints(const vector <PlayerCharacter *> &playerL
 		Display::whoTrain();
 
 		Display::showPlayerListAll(playerList);
-		cin >> choiceCharacter;
+		choiceCharacter=Action::getInput(0, playerList.size());
 
-		if(choiceCharacter<0 && choiceCharacter>playerList.size()){
-			Display::wrongInput();
-		}
+
 
 	}while(choiceCharacter<0 && choiceCharacter>playerList.size());
 
@@ -142,11 +141,8 @@ void PlayerCharacter:: attributePoints(const vector <PlayerCharacter *> &playerL
 		do{
 		Display::increaseWhichStats();
 
-		cin >> choiceStat;
+		choiceStat=Action::getInput(0, 5);;
 
-		if(choiceStat<0 && choiceStat>playerList.size()){
-			Display::wrongInput();
-		}
 
 
 
@@ -233,7 +229,7 @@ void PlayerCharacter:: attributePoints(const vector <PlayerCharacter *> &playerL
 				goldCost=(1+_trainedAg)*50;
 
 				if (_trainedAg==MAX_TRAINED){
-					Display::alreadyMaxTrained(playerList[(choiceCharacter-1)], "Con");
+					Display::alreadyMaxTrained(playerList[(choiceCharacter-1)], "Ag");
 				}
 
 				else if (gold<goldCost){
@@ -249,7 +245,7 @@ void PlayerCharacter:: attributePoints(const vector <PlayerCharacter *> &playerL
 				break;
 		}
 
-			}while(choiceStat<0 && choiceStat>playerList.size() && selectedStat==false);
+			}while(choiceStat!=0 && selectedStat==false);
 
 	}
 
@@ -274,16 +270,13 @@ int PlayerCharacter::selectTargetPlayer(const int spellType){
 
 		if (spellType==1 or spellType==7) {
 			Display:: selectAllEnemies();
-			cin >>choiceTarget;
+			choiceTarget=Action::getInput(0, 1);
 		}
 
 		else if (spellType==3 or spellType==5) {
 			Display::selectAllAllies();
-			cin >>choiceTarget;
+			choiceTarget=Action::getInput(0, 1);
 
-		}
-		else {
-			cout << "Something went wrong in playerTurn when select all";
 		}
 
 	}while(choiceTarget!=1 and choiceTarget!=0);
@@ -298,28 +291,23 @@ int PlayerCharacter:: selectTargetPlayer( vector <PlayerCharacter *> &targetList
 	int nbTarget;
 	vector<PlayerCharacter*> subList;
 
-	do {
-
-		Display::selectTarget();
-
-		nbTarget=Display:: showPlayerListAlive(targetList);
-
-		cin>> choiceTarget;
-
-		for (int i=0; i<targetList.size(); i++) {
+	for (int i=0; i<targetList.size(); i++) {
 			if (targetList[i]->isAlive()){
 				subList.push_back(targetList[i]);
 			}
 		}
 
-		if (choiceTarget<0 || choiceTarget>nbTarget) {
-			Display:: wrongInput();
-		}
+	do {
+
+		Display::selectTarget();
+		nbTarget=Display:: showPlayerListAlive(targetList);
+
+		choiceTarget=Action::getInput(0, nbTarget);
 
 
 	} while (choiceTarget<0 || choiceTarget>nbTarget);
 
-	if (choiceTarget!=0){
+	if (choiceTarget!=0 && choiceTarget!=-1){
 		vector<PlayerCharacter*>::iterator target=find(targetList.begin(), targetList.end(), subList[choiceTarget-1]);
 		choiceTarget=target-targetList.begin()+1;
 	}
@@ -335,23 +323,21 @@ int PlayerCharacter:: selectTargetPlayer(vector <EnemyCharacter *> &targetList){
 	int nbTarget;
 	vector<EnemyCharacter*> subList;
 
+	for (int i=0; i<targetList.size(); i++) {
+		if (targetList[i]->isAlive()){
+			subList.push_back(targetList[i]);
+		}
+	}
+
 	do {
 
 		Display:: selectTarget();
 
 		nbTarget=Display:: showEnemyList(targetList);
 
-		cin>> choiceTarget;
+		choiceTarget=Action::getInput(0, nbTarget);
 
-		for (int i=0; i<targetList.size(); i++) {
-			if (targetList[i]->isAlive()){
-				subList.push_back(targetList[i]);
-			}
-		}
 
-		if (choiceTarget<0 || choiceTarget>nbTarget) {
-			Display:: wrongInput();
-		}
 
 	} while (choiceTarget<0 or choiceTarget>nbTarget);
 
@@ -386,12 +372,12 @@ void PlayerCharacter:: playerTurn(vector <PlayerCharacter *> &playerList, vector
 
 	while (finishedTurn!=1 && allEnemiesDied==0){
 		Display::selectAction();
-		cin >> choice;
+		choice=Action::getInput(1, 2);
 
 		while (choice !=1 && choice !=2){
-				Display:: wrongInput();
 				Display:: selectAction();
-				cin >> choice;
+				choice=Action::getInput(1, 2);
+
 		}
 
 
@@ -419,14 +405,10 @@ void PlayerCharacter:: playerTurn(vector <PlayerCharacter *> &playerList, vector
 						Display::magicMenu(*this);
 
 
-						cin>> choiceSpell;
+						choiceSpell=Action::getInput(0, this->getSpellList().size());
 
-						if ((choiceSpell<0) || (choiceSpell>this->getSpellList().size())){
-							Display::wrongInput();
-						}
-
-						else if (choiceSpell!=0){
-								MPCost=this->getSpellList()[choiceSpell-1].getMPCost();
+						if (choiceSpell!=0 && choiceSpell!=-1){
+							MPCost=this->getSpellList()[choiceSpell-1].getMPCost();
 						}
 
 					if (this->getMP()<MPCost && choiceSpell!=0){
@@ -470,7 +452,7 @@ void PlayerCharacter:: playerTurn(vector <PlayerCharacter *> &playerList, vector
 									}
 
 									else {
-										 cout<< "!Wrong function call! The dev is a dimwit\n\tLOCATION playerTurn TargetAll (line 502)\n";
+										 Display:: errorInFunction();
 									}
 
 								}
@@ -491,7 +473,7 @@ void PlayerCharacter:: playerTurn(vector <PlayerCharacter *> &playerList, vector
 							}
 
 							else {
-								cout<< "!Wrong function call! The dev is a dimwit\n\tLOCATION playerTurn selectTarget Single (line 522)\n";
+								 Display:: errorInFunction();
 							}
 
 
@@ -515,7 +497,7 @@ void PlayerCharacter:: playerTurn(vector <PlayerCharacter *> &playerList, vector
 								}
 
 								else {
-									cout<< "!Wrong function call! The dev is a dimwit\n\tLOCATION playerTurn castSpell (line 547)\n";
+									 Display:: errorInFunction();
 								}
 
 							}
